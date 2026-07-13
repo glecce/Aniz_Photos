@@ -33,12 +33,15 @@ botoesFiltro.forEach(botao => {
 
 pinsMapa.forEach(pin => {
     const filtro = pin.dataset.filtro;
-    const preview = pin.querySelector('.mapa-pin-preview-img');
+    const preview = pin.querySelector('.mapa-pin-preview');
+    const previewImg = pin.querySelector('.mapa-pin-preview-img');
     const fotoDaCategoria = document.querySelector(`.galeria img[data-categoria="${filtro}"]`);
 
     if (fotoDaCategoria) {
-        preview.src = fotoDaCategoria.src;
-        preview.alt = fotoDaCategoria.alt;
+        previewImg.src = fotoDaCategoria.src;
+        previewImg.alt = fotoDaCategoria.alt;
+    } else {
+        preview.classList.add('sem-foto');
     }
 
     pin.addEventListener('click', () => {

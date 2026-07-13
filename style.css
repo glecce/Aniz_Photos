@@ -6,8 +6,14 @@
     --color-terciaria: #E8A07C;
     --color-bg: #FFEED6;
     --color-text-primaria: #000000;
-    --font-principal:'Special Elite'; 
+    --font-principal:'Special Elite';
 
+    --color-espanha: #b3382c;
+    --color-egito: #c9a227;
+    --color-malta: #2e6da4;
+    --color-italia: #3f7d4a;
+    --color-grecia: #8c8c8c;
+    --color-portugal: #d2691e;
 }
 
 
@@ -94,6 +100,37 @@ header {
     color: var(--color-bg);
 }
 
+.filtro-btn.ativo[data-filtro="barcelona"],
+.filtro-btn.ativo[data-filtro="madrid"] {
+    background-color: var(--color-espanha);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="egito"] {
+    background-color: var(--color-egito);
+    color: var(--color-text-primaria);
+}
+
+.filtro-btn.ativo[data-filtro="malta"] {
+    background-color: var(--color-malta);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="sangiovanni"] {
+    background-color: var(--color-italia);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="atenas"] {
+    background-color: var(--color-grecia);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="porto"] {
+    background-color: var(--color-portugal);
+    color: #fff;
+}
+
 .mapa {
     padding: 20px;
     text-align: center;
@@ -123,6 +160,35 @@ header {
     fill: var(--color-secundaria);
     stroke: var(--color-bg);
     stroke-width: 0.6;
+    transition: fill 0.2s ease;
+}
+
+.mapa-wrapper svg g#es path,
+.mapa-wrapper svg path#es {
+    fill: var(--color-espanha);
+}
+
+.mapa-wrapper svg path#eg {
+    fill: var(--color-egito);
+}
+
+.mapa-wrapper svg path#mt {
+    fill: var(--color-malta);
+}
+
+.mapa-wrapper svg g#it path,
+.mapa-wrapper svg path#it {
+    fill: var(--color-italia);
+}
+
+.mapa-wrapper svg g#gr path,
+.mapa-wrapper svg path#gr {
+    fill: var(--color-grecia);
+}
+
+.mapa-wrapper svg g#pt path,
+.mapa-wrapper svg path#pt {
+    fill: var(--color-portugal);
 }
 
 .mapa-pin {
@@ -160,6 +226,8 @@ header {
 .mapa-pin[data-filtro="atenas"] { --rot: -3deg; }
 .mapa-pin[data-filtro="barcelona"] { --rot: 5deg; }
 .mapa-pin[data-filtro="madrid"] { --rot: -2deg; }
+.mapa-pin[data-filtro="porto"] { --rot: 3deg; }
+.mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; }
 
 .mapa-pin-preview {
     position: absolute;
@@ -203,6 +271,24 @@ header {
     font-size: 0.75rem;
     color: var(--color-text-primaria);
     background-color: transparent;
+}
+
+.mapa-pin-preview.sem-foto .mapa-pin-preview-img {
+    display: none;
+}
+
+.mapa-pin-preview.sem-foto::before {
+    content: "Em breve";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    text-align: center;
+    font-family: var(--font-principal);
+    font-size: 0.7rem;
+    color: var(--color-secundaria);
+    background-color: var(--color-bg);
+    border: 1px dashed var(--color-secundaria);
 }
 
 .mapa-credito {
