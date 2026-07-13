@@ -51,6 +51,7 @@ function abrirLightbox(img) {
     indiceAtual = visiveis.indexOf(img);
     mostrarFoto();
     lightbox.classList.add('ativo');
+    document.body.classList.add('sem-scroll');
 }
 
 function mostrarFoto() {
@@ -81,6 +82,7 @@ function atualizarPainelInfo(img) {
 
 function fecharLightbox() {
     lightbox.classList.remove('ativo');
+    document.body.classList.remove('sem-scroll');
     fecharInfo();
 }
 

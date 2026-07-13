@@ -24,6 +24,10 @@ main {
     background-color: var(--color-bg);
 }
 
+body.sem-scroll {
+    overflow: hidden;
+}
+
 
 
 
