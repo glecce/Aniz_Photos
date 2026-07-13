@@ -409,6 +409,11 @@ header {
     .lightbox-img-lateral {
         display: none;
     }
+
+    .lightbox-img {
+        max-width: 94vw;
+        max-height: 80vh;
+    }
 }
 
 .lightbox-fechar,
