@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./img_Logo/logo_transparente.png">
+    <title>Aniz / Photos</title>
+</head>
+<body>
+    <header>
+        <!-- <img class="cabeca_logo direita" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
+        <h1 class="cabeca_titulo">.Photos</h1>
+        <!-- <nav class="cabeca_menu">
+            <a class="cabeca_menu_botton" href="universe"></a>
+        </nav> -->
+        <!-- <img class="cabeca_logo esquerda" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
+    </header>
+    <main>
+        <nav class="filtros">
+            <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
+            <!-- <button class="filtro-btn" data-filtro="roma">Roma</button> -->
+            <button class="filtro-btn" data-filtro="egito">Egito</button>
+            <button class="filtro-btn" data-filtro="malta">Malta</button>
+            <button class="filtro-btn" data-filtro="atenas">Atenas</button>
+            <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
+            <button class="filtro-btn" data-filtro="madrid">Madrid</button>
+            <button class="filtro-btn" data-filtro="outros">Outros</button>
+        </nav>
+        <section class="galeria_completa">
+            <div class="galeria">
+                <img src="./Img_Photos/DSC01868.jpg" alt="Água-viva no aquário" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC01925.jpg" alt="Peixe-leão no aquário" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC04398.jpg" alt="Camelo com as pirâmides de Gizé ao fundo" data-categoria="egito"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC04948.jpg" alt="Máscara de Tutancâmon" data-categoria="egito"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC05827.jpg" alt="Polvos à venda em mercado de Malta" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC05832.jpg" alt="Peixes à venda em mercado de Malta" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC05836.jpg" alt="Laranjas à venda em mercado de Malta" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC05839.jpg" alt="Limões à venda em mercado de Malta" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/DSC06825.jpg" alt="Orangotango" data-categoria="madrid"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/IMG_0079.jpg" alt="Passeio de camelo com pirâmide ao fundo" data-categoria="egito"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <img src="./Img_Photos/IMG_1469.jpg" alt="Lagarto colorido" data-categoria="malta"
+                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-fechar" id="lightbox-fechar" aria-label="Fechar">&times;</button>
+        <button class="lightbox-info-botao" id="lightbox-info-botao" aria-label="Informações da foto">&#9432;</button>
+        <button class="lightbox-seta lightbox-anterior" id="lightbox-anterior" aria-label="Foto anterior">&#10094;</button>
+        <div class="lightbox-conteudo">
+            <img class="lightbox-img-lateral" id="lightbox-img-anterior" src="" alt="">
+            <img class="lightbox-img" id="lightbox-img" src="" alt="">
+            <img class="lightbox-img-lateral" id="lightbox-img-proxima" src="" alt="">
+        </div>
+        <button class="lightbox-seta lightbox-proxima" id="lightbox-proxima" aria-label="Próxima foto">&#10095;</button>
+    </div>
+
+    <div class="lightbox-info-fundo" id="lightbox-info-fundo">
+        <dl class="lightbox-info-painel" id="lightbox-info-painel">
+            <button class="lightbox-info-fechar" id="lightbox-info-fechar" aria-label="Fechar informações">&times;</button>
+            <div class="lightbox-info-item" data-campo="data">
+                <dt>Data</dt>
+                <dd id="info-data"></dd>
+            </div>
+            <div class="lightbox-info-item" data-campo="camera">
+                <dt>Câmera</dt>
+                <dd id="info-camera"></dd>
+            </div>
+            <div class="lightbox-info-item" data-campo="lente">
+                <dt>Lente</dt>
+                <dd id="info-lente"></dd>
+            </div>
+            <div class="lightbox-info-item" data-campo="iso">
+                <dt>ISO</dt>
+                <dd id="info-iso"></dd>
+            </div>
+            <div class="lightbox-info-item" data-campo="foco">
+                <dt>Distância focal</dt>
+                <dd id="info-foco"></dd>
+            </div>
+            <div class="lightbox-info-item" data-campo="obturador">
+                <dt>Obturador</dt>
+                <dd id="info-obturador"></dd>
+            </div>
+        </dl>
+    </div>
+
+    <script src="script.js"></script>
+
+    <footer class="rodape">
+        <img class="footer_logo" src="./img_Logo/logo_transparente.png" alt="logo aniz footer">
+    </footer>
+</body>
+</html>

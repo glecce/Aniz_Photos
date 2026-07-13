@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+:root {
+    --color-principal: #A5AF79;
+    --color-secundaria: #827148;
+    --color-terciaria: #E8A07C;
+    --color-bg: #FFEED6;
+    --color-text-primaria: #000000;
+    --font-principal:'Special Elite'; 
+
+}
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--color-bg);
+}
+
+main {
+    background-color: var(--color-bg);
+}
+
+
+
+
+
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cabeca_logo {
+    height: 3.5rem;
+    width: auto;
+    align-self: center;
+}
+
+.esquerda {
+    transform: scaleX(-1);
+}
+
+.cabeca_titulo{
+    padding: 40px 60px;
+    font-family: var(--font-principal);
+    font-size: 2rem;
+
+}
+
+
+
+
+
+
+
+
+    
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-inline: 20px;
+}
+
+.filtro-btn {
+    font-family: var(--font-principal);
+    background: none;
+    border: 1px solid var(--color-text-primaria);
+    color: var(--color-text-primaria);
+    padding: 0.5em 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, scale 0.2s ease;
+}
+
+.filtro-btn:hover {
+    background: var(--color-terciaria);
+    color: var(--color-text-primaria);
+    scale: 1.05;
+}
+
+.filtro-btn.ativo {
+    background: var(--color-terciaria);
+    color: var(--color-bg);
+}
+
+
+
+
+
+
+
+
+.galeria{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    padding: 20px;
+    width: 100%;
+}
+
+
+.galeria_completa {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    gap: 50px;
+    width: 100%;
+}
+
+.galeria img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgb(51, 50, 50);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+}
+
+.galeria img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0.4, 0.4, 0.4, 0.4);
+    opacity: 0.9;
+}
+
+.rodape{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+
+.footer_logo {
+    height: 3.5rem;
+    width: auto;
+    align-self: center;
+}
+
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+
+
+
+
+.lightbox.ativo {
+    display: flex;
+}
+
+.lightbox-conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.lightbox-img {
+    max-width: 60vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: transparent;
+    z-index: 1;
+}
+
+.lightbox-img-lateral {
+    max-width: 20vw;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: transparent;
+    opacity: 0.2;
+    cursor: pointer;
+    transition: opacity 0.2s ease, scale 0.2s ease;
+    flex-shrink: 0;
+}
+
+.lightbox-img-lateral:hover {
+    opacity: 0.7;
+    scale: 1.03;
+}
+
+@media (max-width: 800px) {
+    .lightbox-img-lateral {
+        display: none;
+    }
+}
+
+.lightbox-fechar,
+.lightbox-seta {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2em 0.4em;
+    transition: color 0.2s ease, scale 0.2s ease;
+}
+
+.lightbox-fechar:hover,
+.lightbox-seta:hover {
+    color: var(--color-terciaria);
+    scale: 1.1;
+}
+
+.lightbox-fechar {
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+}
+
+.lightbox-anterior {
+    left: 20px;
+}
+
+.lightbox-proxima {
+    right: 20px;
+}
+
+.lightbox-info-botao {
+    position: absolute;
+    top: 20px;
+    right: 90px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2em 0.4em;
+    transition: color 0.2s ease, scale 0.2s ease;
+}
+
+.lightbox-info-botao:hover,
+.lightbox-info-botao.ativo {
+    color: var(--color-terciaria);
+    scale: 1.1;
+}
+
+.lightbox-info-fundo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-info-fundo.ativo {
+    display: flex;
+}
+
+.lightbox-info-painel {
+    position: relative;
+    display: flex;
+    max-width: 90vw;
+    background-color: #1a1a1a;
+    color: #fff;
+    border-radius: 8px;
+    padding: 2em 2.5em;
+    gap: 1em 2.5em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.lightbox-info-fechar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2em 0.4em;
+    transition: color 0.2s ease, scale 0.2s ease;
+}
+
+.lightbox-info-fechar:hover {
+    color: var(--color-terciaria);
+    scale: 1.1;
+}
+
+.lightbox-info-item {
+    background-color: transparent;
+    text-align: center;
+}
+
+.lightbox-info-item dt {
+    background-color: transparent;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.lightbox-info-item dd {
+    background-color: transparent;
+    font-family: var(--font-principal);
+    font-size: 0.95rem;
+    margin-top: 0.5em;
+}
+
+.lightbox-info-item.vazio {
+    display: none;
+}
