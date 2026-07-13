@@ -132,7 +132,7 @@ header {
 }
 
 .mapa {
-    padding: 20px;
+    padding: 20px 60px;
     text-align: center;
 }
 
@@ -145,7 +145,7 @@ header {
 .mapa-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1050px;
+    max-width: 1300px;
     aspect-ratio: 784.077 / 458.627;
     margin: 0 auto;
 }
@@ -203,31 +203,30 @@ header {
 
 .mapa-pin-ponto {
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background-color: var(--color-terciaria);
+    background-color: var(--cor, var(--color-terciaria));
     border: 2px solid var(--color-bg);
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .mapa-pin:hover .mapa-pin-ponto,
 .mapa-pin:focus .mapa-pin-ponto {
     transform: scale(1.3);
-    background-color: var(--color-principal);
 }
 
 .mapa-pin.ativo .mapa-pin-ponto {
-    background-color: var(--color-principal);
+    box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 6px var(--cor, var(--color-principal));
 }
 
-.mapa-pin[data-filtro="malta"] { --rot: -6deg; }
-.mapa-pin[data-filtro="egito"] { --rot: 4deg; }
-.mapa-pin[data-filtro="atenas"] { --rot: -3deg; }
-.mapa-pin[data-filtro="barcelona"] { --rot: 5deg; }
-.mapa-pin[data-filtro="madrid"] { --rot: -2deg; }
-.mapa-pin[data-filtro="porto"] { --rot: 3deg; }
-.mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; }
+.mapa-pin[data-filtro="malta"] { --rot: -6deg; --cor: var(--color-malta); }
+.mapa-pin[data-filtro="egito"] { --rot: 4deg; --cor: var(--color-egito); }
+.mapa-pin[data-filtro="atenas"] { --rot: -3deg; --cor: var(--color-grecia); }
+.mapa-pin[data-filtro="barcelona"] { --rot: 5deg; --cor: var(--color-espanha); }
+.mapa-pin[data-filtro="madrid"] { --rot: -2deg; --cor: var(--color-espanha); }
+.mapa-pin[data-filtro="porto"] { --rot: 3deg; --cor: var(--color-portugal); }
+.mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; --cor: var(--color-italia); }
 
 .mapa-pin-preview {
     position: absolute;
