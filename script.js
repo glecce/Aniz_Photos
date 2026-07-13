@@ -10,6 +10,8 @@ fotos.forEach(foto => galeria.appendChild(foto));
 
 const botoesFiltro = document.querySelectorAll('.filtro-btn');
 const imagens = document.querySelectorAll('.galeria img');
+const pinsMapa = document.querySelectorAll('.mapa-pin');
+const galeriaCompleta = document.querySelector('.galeria_completa');
 
 botoesFiltro.forEach(botao => {
     botao.addEventListener('click', () => {
@@ -22,6 +24,29 @@ botoesFiltro.forEach(botao => {
             const mostrar = filtro === 'todos' || img.dataset.categoria === filtro;
             img.style.display = mostrar ? '' : 'none';
         });
+
+        pinsMapa.forEach(pin => {
+            pin.classList.toggle('ativo', pin.dataset.filtro === filtro);
+        });
+    });
+});
+
+pinsMapa.forEach(pin => {
+    const filtro = pin.dataset.filtro;
+    const preview = pin.querySelector('.mapa-pin-preview-img');
+    const fotoDaCategoria = document.querySelector(`.galeria img[data-categoria="${filtro}"]`);
+
+    if (fotoDaCategoria) {
+        preview.src = fotoDaCategoria.src;
+        preview.alt = fotoDaCategoria.alt;
+    }
+
+    pin.addEventListener('click', () => {
+        const botao = document.querySelector(`.filtro-btn[data-filtro="${filtro}"]`);
+        if (botao) {
+            botao.click();
+            galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
 
