@@ -191,12 +191,14 @@ header {
     border-color: var(--color-quaternaria);
 }
 
+.filtro-btn.filtro-estilo[data-estilo="colorido"]:hover,
 .filtro-btn.ativo[data-estilo="colorido"] {
     background: linear-gradient(90deg, #d9584c, #e0a24f, #d9c257, #7fa966, #4f8fbd, #8266a8);
     border-color: transparent;
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="preto-e-branco"]:hover,
 .filtro-btn.ativo[data-estilo="preto-e-branco"] {
     background-color: #1a1a1a;
     border-color: #1a1a1a;
@@ -204,21 +206,25 @@ header {
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="animais"]:hover,
 .filtro-btn.ativo[data-estilo="animais"] {
     background-color: var(--color-secundaria);
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="humano"]:hover,
 .filtro-btn.ativo[data-estilo="humano"] {
     background-color: var(--color-terciaria);
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="paisagem"]:hover,
 .filtro-btn.ativo[data-estilo="paisagem"] {
     background-color: var(--color-principal);
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="objeto"]:hover,
 .filtro-btn.ativo[data-estilo="objeto"] {
     background-color: var(--color-quaternaria);
     color: #fff;
