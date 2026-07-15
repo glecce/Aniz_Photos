@@ -230,6 +230,90 @@ header {
     color: #fff;
 }
 
+.carrossel-secao {
+    padding: 10px 0 0;
+}
+
+.carrossel-titulo {
+    text-align: center;
+    font-family: var(--font-principal);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.55;
+    margin-bottom: 0.6em;
+}
+
+.carrossel {
+    display: flex;
+    gap: 26px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 10px 40px 30px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.polaroid {
+    position: relative;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: 190px;
+    background-color: #fffdf7;
+    padding: 12px 12px 34px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polaroid:nth-child(3n+1) { transform: rotate(-2.5deg); }
+.polaroid:nth-child(3n+2) { transform: rotate(1.5deg); }
+.polaroid:nth-child(3n) { transform: rotate(-1deg); }
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.06);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    z-index: 2;
+}
+
+.polaroid img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    background-color: transparent;
+    filter: sepia(0.15) contrast(1.05) saturate(1.05);
+}
+
+.polaroid .estrela-favorita {
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    filter: none;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+@media (max-width: 800px) {
+    .carrossel {
+        gap: 18px;
+        padding: 10px 20px 26px;
+    }
+
+    .polaroid {
+        width: 150px;
+        padding: 10px 10px 28px;
+    }
+
+    .polaroid img {
+        height: 150px;
+    }
+}
+
 .mapa {
     padding: 20px 60px;
     text-align: center;
@@ -429,7 +513,11 @@ header {
     width: 100%;
 }
 
-.galeria img {
+.galeria-item {
+    position: relative;
+}
+
+.galeria-item img {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -439,13 +527,28 @@ header {
     border: 1px solid rgb(51, 50, 50);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    
+
 }
 
-.galeria img:hover {
+.galeria-item img:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(0.4, 0.4, 0.4, 0.4);
     opacity: 0.9;
+}
+
+.estrela-favorita,
+.galeria-item .estrela-favorita {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    width: 32px;
+    height: auto;
+    object-fit: contain;
+    border: none;
+    border-radius: 0;
+    cursor: default;
+    pointer-events: none;
 }
 
 .rodape{

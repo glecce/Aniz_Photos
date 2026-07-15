@@ -1,10 +1,14 @@
-const galeria = document.querySelector('.galeria');
-const fotos = Array.from(galeria.children);
-
-for (let i = fotos.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [fotos[i], fotos[j]] = [fotos[j], fotos[i]];
+function embaralhar(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
+
+const galeria = document.querySelector('.galeria');
+const fotosOrdemOriginal = Array.from(galeria.children);
+const fotos = embaralhar([...fotosOrdemOriginal]);
 
 fotos.forEach(foto => galeria.appendChild(foto));
 
@@ -14,6 +18,20 @@ const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
 
+function criarEstrela() {
+    const estrela = document.createElement('img');
+    estrela.className = 'estrela-favorita';
+    estrela.src = './img_Icones/estrela-favorita.png';
+    estrela.alt = 'Favorite';
+    return estrela;
+}
+
+imagens.forEach(img => {
+    if (img.dataset.favorita === 'true') {
+        img.insertAdjacentElement('afterend', criarEstrela());
+    }
+});
+
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
 
@@ -22,7 +40,9 @@ function atualizarGaleria() {
         const bateLocal = filtroLocalAtivo === 'todos' || img.dataset.categoria === filtroLocalAtivo;
         const estilos = (img.dataset.estilo || '').split(' ');
         const bateEstilo = filtroEstiloAtivo === 'todos' || estilos.includes(filtroEstiloAtivo);
-        img.style.display = (bateLocal && bateEstilo) ? '' : 'none';
+        const visivel = bateLocal && bateEstilo;
+        img.style.display = visivel ? '' : 'none';
+        img.closest('.galeria-item').style.display = visivel ? '' : 'none';
     });
 
     pinsMapa.forEach(pin => {
@@ -86,25 +106,25 @@ const btnInfoFechar = document.getElementById('lightbox-info-fechar');
 const camposInfo = ['data', 'camera', 'lente', 'iso', 'foco', 'obturador'];
 
 let indiceAtual = 0;
+let listaAtual = [];
 
 function getVisiveis() {
     return Array.from(imagens).filter(img => img.style.display !== 'none');
 }
 
-function abrirLightbox(img) {
-    const visiveis = getVisiveis();
-    indiceAtual = visiveis.indexOf(img);
+function abrirLightbox(img, lista) {
+    listaAtual = lista || getVisiveis();
+    indiceAtual = listaAtual.indexOf(img);
     mostrarFoto();
     lightbox.classList.add('ativo');
     document.body.classList.add('sem-scroll');
 }
 
 function mostrarFoto() {
-    const visiveis = getVisiveis();
-    const total = visiveis.length;
-    const imgAnterior = visiveis[(indiceAtual - 1 + total) % total];
-    const img = visiveis[indiceAtual];
-    const imgProxima = visiveis[(indiceAtual + 1) % total];
+    const total = listaAtual.length;
+    const imgAnterior = listaAtual[(indiceAtual - 1 + total) % total];
+    const img = listaAtual[indiceAtual];
+    const imgProxima = listaAtual[(indiceAtual + 1) % total];
 
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
@@ -137,14 +157,12 @@ function fecharInfo() {
 }
 
 function fotoAnterior() {
-    const visiveis = getVisiveis();
-    indiceAtual = (indiceAtual - 1 + visiveis.length) % visiveis.length;
+    indiceAtual = (indiceAtual - 1 + listaAtual.length) % listaAtual.length;
     mostrarFoto();
 }
 
 function fotoProxima() {
-    const visiveis = getVisiveis();
-    indiceAtual = (indiceAtual + 1) % visiveis.length;
+    indiceAtual = (indiceAtual + 1) % listaAtual.length;
     mostrarFoto();
 }
 
@@ -253,3 +271,35 @@ function finalizarToque(evento) {
 
 lightbox.addEventListener('touchend', finalizarToque, { passive: true });
 lightbox.addEventListener('touchcancel', () => { toqueEmAndamento = false; }, { passive: true });
+
+function criarPolaroid(img, lista) {
+    const polaroid = document.createElement('figure');
+    polaroid.className = 'polaroid';
+
+    const imgClone = document.createElement('img');
+    imgClone.src = img.src;
+    imgClone.alt = img.alt;
+    polaroid.appendChild(imgClone);
+
+    if (img.dataset.favorita === 'true') {
+        polaroid.appendChild(criarEstrela());
+    }
+
+    polaroid.addEventListener('click', () => abrirLightbox(img, lista));
+    return polaroid;
+}
+
+const secaoFavoritas = document.getElementById('secao-favoritas');
+const carrosselFavoritas = document.getElementById('carrossel-favoritas');
+const carrosselRecentes = document.getElementById('carrossel-recentes');
+const imagensOrdemOriginal = fotosOrdemOriginal.map(item => item.querySelector('img'));
+
+const favoritas = embaralhar(imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true'));
+if (favoritas.length === 0) {
+    secaoFavoritas.hidden = true;
+} else {
+    favoritas.forEach(img => carrosselFavoritas.appendChild(criarPolaroid(img, favoritas)));
+}
+
+const recentes = imagensOrdemOriginal.slice(-8).reverse();
+recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes)));

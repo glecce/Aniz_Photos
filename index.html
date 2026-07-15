@@ -18,30 +18,15 @@
         <!-- <img class="cabeca_logo esquerda" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
     </header>
     <main>
-        <p class="filtros-legenda">Where</p>
-        <nav class="filtros">
-            <button class="filtro-btn ativo" data-filtro="todos">All</button>
-            <!-- <button class="filtro-btn" data-filtro="roma">Rome</button> -->
-            <button class="filtro-btn" data-filtro="egito">Egypt</button>
-            <button class="filtro-btn" data-filtro="malta">Malta</button>
-            <button class="filtro-btn" data-filtro="atenas">Athens</button>
-            <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
-            <button class="filtro-btn" data-filtro="madrid">Madrid</button>
-            <button class="filtro-btn" data-filtro="porto">Porto</button>
-            <button class="filtro-btn" data-filtro="sangiovanni">San Giovanni Rotondo</button>
-            <!-- <button class="filtro-btn" data-filtro="outros">Other</button> -->
-        </nav>
+        <section class="carrossel-secao" id="secao-favoritas">
+            <h2 class="carrossel-titulo">Favorites</h2>
+            <div class="carrossel" id="carrossel-favoritas"></div>
+        </section>
 
-        <p class="filtros-legenda">Style</p>
-        <nav class="filtros">
-            <button class="filtro-btn filtro-estilo ativo" data-estilo="todos">All</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="paisagem">Landscape</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="preto-e-branco">Black and White</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="colorido">Color</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
-        </nav>
+        <section class="carrossel-secao" id="secao-recentes">
+            <h2 class="carrossel-titulo">Latest</h2>
+            <div class="carrossel" id="carrossel-recentes"></div>
+        </section>
 
         <section class="mapa">
             <!-- <h2 class="mapa-titulo">Explore pelo mapa</h2> -->
@@ -499,30 +484,77 @@
             <!-- <p class="mapa-credito">Mapa: Al MacDonald / Fritz Lekschas (CC BY-SA 3.0)</p> -->
         </section>
 
+        <p class="filtros-legenda">Where</p>
+        <nav class="filtros">
+            <button class="filtro-btn ativo" data-filtro="todos">All</button>
+            <!-- <button class="filtro-btn" data-filtro="roma">Rome</button> -->
+            <button class="filtro-btn" data-filtro="egito">Egypt</button>
+            <button class="filtro-btn" data-filtro="malta">Malta</button>
+            <button class="filtro-btn" data-filtro="atenas">Athens</button>
+            <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
+            <button class="filtro-btn" data-filtro="madrid">Madrid</button>
+            <button class="filtro-btn" data-filtro="porto">Porto</button>
+            <button class="filtro-btn" data-filtro="sangiovanni">San Giovanni Rotondo</button>
+            <!-- <button class="filtro-btn" data-filtro="outros">Other</button> -->
+        </nav>
+
+        <p class="filtros-legenda">Style</p>
+        <nav class="filtros">
+            <button class="filtro-btn filtro-estilo ativo" data-estilo="todos">All</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="paisagem">Landscape</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="preto-e-branco">Black and White</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="colorido">Color</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
+        </nav>
+
         <section class="galeria_completa">
             <div class="galeria">
-                <img src="./Img_Photos/DSC01868.jpg" alt="Água-viva no aquário" data-categoria="malta" data-estilo="animais colorido"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC01925.jpg" alt="Peixe-leão no aquário" data-categoria="malta" data-estilo="animais preto-e-branco"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC04398.jpg" alt="Camelo com as pirâmides de Gizé ao fundo" data-categoria="egito" data-estilo="animais preto-e-branco"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC04948.jpg" alt="Máscara de Tutancâmon" data-categoria="egito" data-estilo="preto-e-branco objeto"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05827.jpg" alt="Polvos à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05832.jpg" alt="Peixes à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05836.jpg" alt="Laranjas à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05839.jpg" alt="Limões à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC06825.jpg" alt="Orangotango" data-categoria="madrid" data-estilo="animais preto-e-branco"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/IMG_0079.jpg" alt="Passeio de camelo com pirâmide ao fundo" data-categoria="egito" data-estilo="paisagem humano preto-e-branco"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/IMG_1469.jpg" alt="Lagarto colorido" data-categoria="malta" data-estilo="animais colorido"
-                    data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC01868.jpg" alt="Água-viva no aquário" data-categoria="malta" data-estilo="animais colorido"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC01925.jpg" alt="Peixe-leão no aquário" data-categoria="malta" data-estilo="animais preto-e-branco"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC04398.jpg" alt="Camelo com as pirâmides de Gizé ao fundo" data-categoria="egito" data-estilo="animais preto-e-branco"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC04948.jpg" alt="Máscara de Tutancâmon" data-favorita="true" data-categoria="egito" data-estilo="preto-e-branco objeto"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC05827.jpg" alt="Polvos à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC05832.jpg" alt="Peixes à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC05836.jpg" alt="Laranjas à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC05839.jpg" alt="Limões à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/DSC06825.jpg" alt="Orangotango" data-favorita="true" data-categoria="madrid" data-estilo="animais preto-e-branco"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/IMG_0079.jpg" alt="Passeio de camelo com pirâmide ao fundo" data-categoria="egito" data-estilo="paisagem humano preto-e-branco"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
+                <div class="galeria-item">
+                    <img src="./Img_Photos/IMG_1469.jpg" alt="Lagarto colorido" data-favorita="true" data-categoria="malta" data-estilo="animais colorido"
+                        data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
+                </div>
             </div>
 
         </section>
