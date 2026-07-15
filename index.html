@@ -484,30 +484,39 @@
             <!-- <p class="mapa-credito">Mapa: Al MacDonald / Fritz Lekschas (CC BY-SA 3.0)</p> -->
         </section>
 
-        <p class="filtros-legenda">Where</p>
-        <nav class="filtros">
-            <button class="filtro-btn ativo" data-filtro="todos">All</button>
-            <!-- <button class="filtro-btn" data-filtro="roma">Rome</button> -->
-            <button class="filtro-btn" data-filtro="egito">Egypt</button>
-            <button class="filtro-btn" data-filtro="malta">Malta</button>
-            <button class="filtro-btn" data-filtro="atenas">Athens</button>
-            <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
-            <button class="filtro-btn" data-filtro="madrid">Madrid</button>
-            <button class="filtro-btn" data-filtro="porto">Porto</button>
-            <button class="filtro-btn" data-filtro="sangiovanni">San Giovanni Rotondo</button>
-            <!-- <button class="filtro-btn" data-filtro="outros">Other</button> -->
-        </nav>
+        <div class="filtros-secao">
+            <div class="filtros-bloco">
+                <p class="filtros-legenda">Where</p>
+                <nav class="filtros">
+                    <button class="filtro-btn ativo" data-filtro="todos">All</button>
+                    <!-- <button class="filtro-btn" data-filtro="roma">Rome</button> -->
+                    <button class="filtro-btn" data-filtro="egito">Egypt</button>
+                    <button class="filtro-btn" data-filtro="malta">Malta</button>
+                    <button class="filtro-btn" data-filtro="atenas">Athens</button>
+                    <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
+                    <button class="filtro-btn" data-filtro="madrid">Madrid</button>
+                    <button class="filtro-btn" data-filtro="porto">Porto</button>
+                    <button class="filtro-btn" data-filtro="sangiovanni">San Giovanni Rotondo</button>
+                    <!-- <button class="filtro-btn" data-filtro="outros">Other</button> -->
+                </nav>
 
-        <p class="filtros-legenda">Style</p>
-        <nav class="filtros">
-            <button class="filtro-btn filtro-estilo ativo" data-estilo="todos">All</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="paisagem">Landscape</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="preto-e-branco">Black and White</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="colorido">Color</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
-            <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
-        </nav>
+                <p class="filtros-legenda">Style</p>
+                <nav class="filtros">
+                    <button class="filtro-btn filtro-estilo ativo" data-estilo="todos">All</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="paisagem">Landscape</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="preto-e-branco">Black and White</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="colorido">Color</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
+                </nav>
+            </div>
+
+            <div class="filtros-toggles">
+                <button class="filtro-toggle filtro-toggle-favorita" id="toggle-favoritas" type="button" aria-pressed="false" aria-label="Show only favorites"></button>
+                <button class="filtro-toggle filtro-toggle-recente" id="toggle-recentes" type="button" aria-pressed="false" aria-label="Show only latest"></button>
+            </div>
+        </div>
 
         <section class="galeria_completa">
             <div class="galeria">

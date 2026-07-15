@@ -18,19 +18,19 @@ const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
 
-function criarEstrela() {
-    const estrela = document.createElement('img');
-    estrela.className = 'estrela-favorita';
-    estrela.src = './img_Icones/estrela-favorita.png';
-    estrela.alt = 'Favorite';
-    return estrela;
-}
+// function criarEstrela() {
+//     const estrela = document.createElement('img');
+//     estrela.className = 'estrela-favorita';
+//     estrela.src = './img_Icones/estrela-favorita.png';
+//     estrela.alt = 'Favorite';
+//     return estrela;
+// }
 
-imagens.forEach(img => {
-    if (img.dataset.favorita === 'true') {
-        img.insertAdjacentElement('afterend', criarEstrela());
-    }
-});
+// imagens.forEach(img => {
+//     if (img.dataset.favorita === 'true') {
+//         img.insertAdjacentElement('afterend', criarEstrela());
+//     }
+// });
 
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
@@ -281,9 +281,9 @@ function criarPolaroid(img, lista) {
     imgClone.alt = img.alt;
     polaroid.appendChild(imgClone);
 
-    if (img.dataset.favorita === 'true') {
-        polaroid.appendChild(criarEstrela());
-    }
+    // if (img.dataset.favorita === 'true') {
+    //     polaroid.appendChild(criarEstrela());
+    // }
 
     polaroid.addEventListener('click', () => abrirLightbox(img, lista));
     return polaroid;

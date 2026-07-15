@@ -56,9 +56,6 @@ header {
     align-self: center;
 }
 
-.esquerda {
-    transform: scaleX(-1);
-}
 
 .cabeca_titulo{
     padding: 40px 60px;
