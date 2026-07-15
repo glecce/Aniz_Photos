@@ -8,26 +8,43 @@ for (let i = fotos.length - 1; i > 0; i--) {
 
 fotos.forEach(foto => galeria.appendChild(foto));
 
-const botoesFiltro = document.querySelectorAll('.filtro-btn');
+const botoesFiltroLocal = document.querySelectorAll('.filtro-btn:not(.filtro-estilo)');
+const botoesFiltroEstilo = document.querySelectorAll('.filtro-btn.filtro-estilo');
 const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
 
-botoesFiltro.forEach(botao => {
+let filtroLocalAtivo = 'todos';
+let filtroEstiloAtivo = 'todos';
+
+function atualizarGaleria() {
+    imagens.forEach(img => {
+        const bateLocal = filtroLocalAtivo === 'todos' || img.dataset.categoria === filtroLocalAtivo;
+        const estilos = (img.dataset.estilo || '').split(' ');
+        const bateEstilo = filtroEstiloAtivo === 'todos' || estilos.includes(filtroEstiloAtivo);
+        img.style.display = (bateLocal && bateEstilo) ? '' : 'none';
+    });
+
+    pinsMapa.forEach(pin => {
+        pin.classList.toggle('ativo', pin.dataset.filtro === filtroLocalAtivo);
+    });
+}
+
+botoesFiltroLocal.forEach(botao => {
     botao.addEventListener('click', () => {
-        botoesFiltro.forEach(b => b.classList.remove('ativo'));
+        botoesFiltroLocal.forEach(b => b.classList.remove('ativo'));
         botao.classList.add('ativo');
+        filtroLocalAtivo = botao.dataset.filtro;
+        atualizarGaleria();
+    });
+});
 
-        const filtro = botao.dataset.filtro;
-
-        imagens.forEach(img => {
-            const mostrar = filtro === 'todos' || img.dataset.categoria === filtro;
-            img.style.display = mostrar ? '' : 'none';
-        });
-
-        pinsMapa.forEach(pin => {
-            pin.classList.toggle('ativo', pin.dataset.filtro === filtro);
-        });
+botoesFiltroEstilo.forEach(botao => {
+    botao.addEventListener('click', () => {
+        botoesFiltroEstilo.forEach(b => b.classList.remove('ativo'));
+        botao.classList.add('ativo');
+        filtroEstiloAtivo = botao.dataset.estilo;
+        atualizarGaleria();
     });
 });
 
@@ -200,24 +217,39 @@ lightbox.addEventListener('wheel', (evento) => {
 }, { passive: false });
 
 let toqueInicialX = 0;
+let toqueInicialY = 0;
+let toqueEmAndamento = false;
 
 lightbox.addEventListener('touchstart', (evento) => {
     toqueInicialX = evento.changedTouches[0].screenX;
+    toqueInicialY = evento.changedTouches[0].screenY;
+    toqueEmAndamento = true;
 }, { passive: true });
 
 lightbox.addEventListener('touchmove', (evento) => {
+    if (!toqueEmAndamento) return;
     evento.preventDefault();
 }, { passive: false });
 
-lightbox.addEventListener('touchend', (evento) => {
+function finalizarToque(evento) {
+    if (!toqueEmAndamento) return;
+    toqueEmAndamento = false;
+
     const toqueFinalX = evento.changedTouches[0].screenX;
-    const diferenca = toqueFinalX - toqueInicialX;
+    const toqueFinalY = evento.changedTouches[0].screenY;
+    const diferencaX = toqueFinalX - toqueInicialX;
+    const diferencaY = toqueFinalY - toqueInicialY;
 
-    if (Math.abs(diferenca) < 50) return;
+    if (Math.abs(diferencaX) < 50 || Math.abs(diferencaX) < Math.abs(diferencaY)) return;
 
-    if (diferenca < 0) {
-        fotoProxima();
-    } else {
-        fotoAnterior();
-    }
-}, { passive: true });
+    navegarComBloqueio(() => {
+        if (diferencaX < 0) {
+            fotoProxima();
+        } else {
+            fotoAnterior();
+        }
+    });
+}
+
+lightbox.addEventListener('touchend', finalizarToque, { passive: true });
+lightbox.addEventListener('touchcancel', () => { toqueEmAndamento = false; }, { passive: true });

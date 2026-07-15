@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 :root {
-    --color-principal: #A5AF79;
-    --color-secundaria: #827148;
-    --color-terciaria: #E8A07C;
+    --color-principal: #a5b874;
+    --color-secundaria: #b39c65;
+    --color-terciaria: #718dc4;
+    --color-quaternaria: #b5623c;
     --color-bg: #FFEED6;
     --color-text-primaria: #000000;
     --font-principal:'Special Elite';
 
     --color-espanha: #b3382c;
     --color-egito: #c9a227;
-    --color-malta: #2e6da4;
+    --color-malta: #472ea4;
     --color-italia: #3f7d4a;
     --color-grecia: #8c8c8c;
     --color-portugal: #d2691e;
@@ -74,6 +75,21 @@ header {
 
 
     
+.filtros-legenda {
+    text-align: center;
+    font-family: var(--font-principal);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.55;
+    margin-top: 1.2em;
+    margin-bottom: 0.4em;
+}
+
+.filtros-legenda:first-of-type {
+    margin-top: 0;
+}
+
 .filtros {
     display: flex;
     flex-wrap: wrap;
@@ -95,13 +111,13 @@ header {
 
 .filtro-btn:hover {
     background: var(--color-terciaria);
-    color: var(--color-text-primaria);
+    color: #fff;
     scale: 1.05;
 }
 
 .filtro-btn.ativo {
     background: var(--color-terciaria);
-    color: var(--color-bg);
+    color: #fff;
 }
 
 .filtro-btn.ativo[data-filtro="barcelona"],
@@ -112,7 +128,7 @@ header {
 
 .filtro-btn.ativo[data-filtro="egito"] {
     background-color: var(--color-egito);
-    color: var(--color-text-primaria);
+    color: #fff;
 }
 
 .filtro-btn.ativo[data-filtro="malta"] {
@@ -132,6 +148,79 @@ header {
 
 .filtro-btn.ativo[data-filtro="porto"] {
     background-color: var(--color-portugal);
+    color: #fff;
+}
+
+/* Identidade visual dos filtros de estilo: um contorno delicado na cor temática, reaproveitando a paleta do site */
+.filtro-btn.filtro-estilo[data-estilo="colorido"],
+.filtro-btn.filtro-estilo[data-estilo="preto-e-branco"],
+.filtro-btn.filtro-estilo[data-estilo="animais"],
+.filtro-btn.filtro-estilo[data-estilo="humano"],
+.filtro-btn.filtro-estilo[data-estilo="paisagem"],
+.filtro-btn.filtro-estilo[data-estilo="objeto"] {
+    border-width: 1.5px;
+}
+
+.filtro-btn.filtro-estilo[data-estilo="colorido"] {
+    border-color: transparent;
+    background-image:
+        linear-gradient(var(--color-bg), var(--color-bg)),
+        linear-gradient(90deg, #d9584c, #e0a24f, #d9c257, #7fa966, #4f8fbd, #8266a8);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.filtro-btn.filtro-estilo[data-estilo="preto-e-branco"] {
+    border-color: #1a1a1a;
+    box-shadow: inset 0 0 0 1.5px #fff;
+}
+
+.filtro-btn.filtro-estilo[data-estilo="animais"] {
+    border-color: var(--color-secundaria);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="humano"] {
+    border-color: var(--color-terciaria);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="paisagem"] {
+    border-color: var(--color-principal);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="objeto"] {
+    border-color: var(--color-quaternaria);
+}
+
+.filtro-btn.ativo[data-estilo="colorido"] {
+    background: linear-gradient(90deg, #d9584c, #e0a24f, #d9c257, #7fa966, #4f8fbd, #8266a8);
+    border-color: transparent;
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-estilo="preto-e-branco"] {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    box-shadow: inset 0 0 0 1.5px #fff;
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-estilo="animais"] {
+    background-color: var(--color-secundaria);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-estilo="humano"] {
+    background-color: var(--color-terciaria);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-estilo="paisagem"] {
+    background-color: var(--color-principal);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-estilo="objeto"] {
+    background-color: var(--color-quaternaria);
     color: #fff;
 }
 
@@ -375,6 +464,14 @@ header {
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.9);
+    touch-action: none;
+}
+
+.lightbox-img,
+.lightbox-img-lateral {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 
@@ -436,6 +533,7 @@ header {
 .lightbox-fechar,
 .lightbox-seta {
     position: absolute;
+    z-index: 5;
     background-color: transparent;
     border: none;
     color: #fff;
@@ -443,6 +541,7 @@ header {
     cursor: pointer;
     line-height: 1;
     padding: 0.2em 0.4em;
+    touch-action: manipulation;
     transition: color 0.2s ease, scale 0.2s ease;
 }
 
@@ -460,10 +559,36 @@ header {
 
 .lightbox-anterior {
     left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .lightbox-proxima {
     right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 800px) {
+    .lightbox-seta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4em;
+        height: 2.4em;
+        padding: 0;
+        font-size: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 50%;
+    }
+
+    .lightbox-anterior {
+        left: 10px;
+    }
+
+    .lightbox-proxima {
+        right: 10px;
+    }
 }
 
 .lightbox-info-botao {

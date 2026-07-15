@@ -18,17 +18,29 @@
         <!-- <img class="cabeca_logo esquerda" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
     </header>
     <main>
+        <p class="filtros-legenda">Where</p>
         <nav class="filtros">
-            <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
-            <!-- <button class="filtro-btn" data-filtro="roma">Roma</button> -->
-            <button class="filtro-btn" data-filtro="egito">Egito</button>
+            <button class="filtro-btn ativo" data-filtro="todos">All</button>
+            <!-- <button class="filtro-btn" data-filtro="roma">Rome</button> -->
+            <button class="filtro-btn" data-filtro="egito">Egypt</button>
             <button class="filtro-btn" data-filtro="malta">Malta</button>
-            <button class="filtro-btn" data-filtro="atenas">Atenas</button>
+            <button class="filtro-btn" data-filtro="atenas">Athens</button>
             <button class="filtro-btn" data-filtro="barcelona">Barcelona</button>
             <button class="filtro-btn" data-filtro="madrid">Madrid</button>
             <button class="filtro-btn" data-filtro="porto">Porto</button>
             <button class="filtro-btn" data-filtro="sangiovanni">San Giovanni Rotondo</button>
-            <!-- <button class="filtro-btn" data-filtro="outros">Outros</button> -->
+            <!-- <button class="filtro-btn" data-filtro="outros">Other</button> -->
+        </nav>
+
+        <p class="filtros-legenda">Style</p>
+        <nav class="filtros">
+            <button class="filtro-btn filtro-estilo ativo" data-estilo="todos">All</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="paisagem">Landscape</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="preto-e-branco">Black and White</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="colorido">Color</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
+            <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
         </nav>
 
         <section class="mapa">
@@ -434,49 +446,49 @@
                 <path id="zw" d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z"/>
             </g>
             </svg>
-            <button class="mapa-pin" data-filtro="malta" style="left: 52.24%; top: 43.15%;" aria-label="Ver fotos de Malta">
+            <button class="mapa-pin" data-filtro="malta" style="left: 52.24%; top: 43.15%;" aria-label="See photos from Malta">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="malta" src="" alt="">
                     <span class="mapa-pin-preview-label">Malta</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="egito" style="left: 56.27%; top: 46.09%;" aria-label="Ver fotos de Egito">
+            <button class="mapa-pin" data-filtro="egito" style="left: 56.27%; top: 46.09%;" aria-label="See photos from Egypt">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="egito" src="" alt="">
-                    <span class="mapa-pin-preview-label">Egito</span>
+                    <span class="mapa-pin-preview-label">Egypt</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="atenas" style="left: 54.49%; top: 40.64%;" aria-label="Ver fotos de Atenas">
+            <button class="mapa-pin" data-filtro="atenas" style="left: 54.49%; top: 40.64%;" aria-label="See photos from Athens">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="atenas" src="" alt="">
-                    <span class="mapa-pin-preview-label">Atenas</span>
+                    <span class="mapa-pin-preview-label">Athens</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="barcelona" style="left: 48.51%; top: 39.33%;" aria-label="Ver fotos de Barcelona">
+            <button class="mapa-pin" data-filtro="barcelona" style="left: 48.51%; top: 39.33%;" aria-label="See photos from Barcelona">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="barcelona" src="" alt="">
                     <span class="mapa-pin-preview-label">Barcelona</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="madrid" style="left: 46.97%; top: 39.94%;" aria-label="Ver fotos de Madrid">
+            <button class="mapa-pin" data-filtro="madrid" style="left: 46.97%; top: 39.94%;" aria-label="See photos from Madrid">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="madrid" src="" alt="">
                     <span class="mapa-pin-preview-label">Madrid</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="porto" style="left: 45.53%; top: 39.85%;" aria-label="Ver fotos de Porto">
+            <button class="mapa-pin" data-filtro="porto" style="left: 45.53%; top: 39.85%;" aria-label="See photos from Porto">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="porto" src="" alt="">
                     <span class="mapa-pin-preview-label">Porto</span>
                 </span>
             </button>
-            <button class="mapa-pin" data-filtro="sangiovanni" style="left: 51.43%; top: 39.33%;" aria-label="Ver fotos de San Giovanni Rotondo">
+            <button class="mapa-pin" data-filtro="sangiovanni" style="left: 51.43%; top: 39.33%;" aria-label="See photos from San Giovanni Rotondo">
                 <span class="mapa-pin-ponto"></span>
                 <span class="mapa-pin-preview">
                     <img class="mapa-pin-preview-img" data-preview="sangiovanni" src="" alt="">
@@ -489,27 +501,27 @@
 
         <section class="galeria_completa">
             <div class="galeria">
-                <img src="./Img_Photos/DSC01868.jpg" alt="Água-viva no aquário" data-categoria="malta"
+                <img src="./Img_Photos/DSC01868.jpg" alt="Água-viva no aquário" data-categoria="malta" data-estilo="animais colorido"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC01925.jpg" alt="Peixe-leão no aquário" data-categoria="malta"
+                <img src="./Img_Photos/DSC01925.jpg" alt="Peixe-leão no aquário" data-categoria="malta" data-estilo="animais preto-e-branco"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC04398.jpg" alt="Camelo com as pirâmides de Gizé ao fundo" data-categoria="egito"
+                <img src="./Img_Photos/DSC04398.jpg" alt="Camelo com as pirâmides de Gizé ao fundo" data-categoria="egito" data-estilo="animais preto-e-branco"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC04948.jpg" alt="Máscara de Tutancâmon" data-categoria="egito"
+                <img src="./Img_Photos/DSC04948.jpg" alt="Máscara de Tutancâmon" data-categoria="egito" data-estilo="preto-e-branco objeto"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05827.jpg" alt="Polvos à venda em mercado de Malta" data-categoria="malta"
+                <img src="./Img_Photos/DSC05827.jpg" alt="Polvos à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05832.jpg" alt="Peixes à venda em mercado de Malta" data-categoria="malta"
+                <img src="./Img_Photos/DSC05832.jpg" alt="Peixes à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05836.jpg" alt="Laranjas à venda em mercado de Malta" data-categoria="malta"
+                <img src="./Img_Photos/DSC05836.jpg" alt="Laranjas à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC05839.jpg" alt="Limões à venda em mercado de Malta" data-categoria="malta"
+                <img src="./Img_Photos/DSC05839.jpg" alt="Limões à venda em mercado de Malta" data-categoria="malta" data-estilo="colorido objeto"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/DSC06825.jpg" alt="Orangotango" data-categoria="madrid"
+                <img src="./Img_Photos/DSC06825.jpg" alt="Orangotango" data-categoria="madrid" data-estilo="animais preto-e-branco"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/IMG_0079.jpg" alt="Passeio de camelo com pirâmide ao fundo" data-categoria="egito"
+                <img src="./Img_Photos/IMG_0079.jpg" alt="Passeio de camelo com pirâmide ao fundo" data-categoria="egito" data-estilo="paisagem humano preto-e-branco"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
-                <img src="./Img_Photos/IMG_1469.jpg" alt="Lagarto colorido" data-categoria="malta"
+                <img src="./Img_Photos/IMG_1469.jpg" alt="Lagarto colorido" data-categoria="malta" data-estilo="animais colorido"
                     data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
             </div>
 
