@@ -17,6 +17,9 @@ const botoesFiltroEstilo = document.querySelectorAll('.filtro-btn.filtro-estilo'
 const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
+const toggleFavoritas = document.getElementById('toggle-favoritas');
+
+const imagensOrdemOriginal = fotosOrdemOriginal.map(item => item.querySelector('img'));
 
 // function criarEstrela() {
 //     const estrela = document.createElement('img');
@@ -34,13 +37,15 @@ const galeriaCompleta = document.querySelector('.galeria_completa');
 
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
+let filtroFavoritaAtivo = false;
 
 function atualizarGaleria() {
     imagens.forEach(img => {
         const bateLocal = filtroLocalAtivo === 'todos' || img.dataset.categoria === filtroLocalAtivo;
         const estilos = (img.dataset.estilo || '').split(' ');
         const bateEstilo = filtroEstiloAtivo === 'todos' || estilos.includes(filtroEstiloAtivo);
-        const visivel = bateLocal && bateEstilo;
+        const bateFavorita = !filtroFavoritaAtivo || img.dataset.favorita === 'true';
+        const visivel = bateLocal && bateEstilo && bateFavorita;
         img.style.display = visivel ? '' : 'none';
         img.closest('.galeria-item').style.display = visivel ? '' : 'none';
     });
@@ -49,6 +54,13 @@ function atualizarGaleria() {
         pin.classList.toggle('ativo', pin.dataset.filtro === filtroLocalAtivo);
     });
 }
+
+toggleFavoritas.addEventListener('click', () => {
+    filtroFavoritaAtivo = !filtroFavoritaAtivo;
+    toggleFavoritas.classList.toggle('ativo', filtroFavoritaAtivo);
+    toggleFavoritas.setAttribute('aria-pressed', String(filtroFavoritaAtivo));
+    atualizarGaleria();
+});
 
 botoesFiltroLocal.forEach(botao => {
     botao.addEventListener('click', () => {
@@ -292,7 +304,6 @@ function criarPolaroid(img, lista) {
 const secaoFavoritas = document.getElementById('secao-favoritas');
 const carrosselFavoritas = document.getElementById('carrossel-favoritas');
 const carrosselRecentes = document.getElementById('carrossel-recentes');
-const imagensOrdemOriginal = fotosOrdemOriginal.map(item => item.querySelector('img'));
 
 const favoritas = embaralhar(imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true'));
 if (favoritas.length === 0) {
