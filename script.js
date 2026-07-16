@@ -325,6 +325,7 @@ function criarPolaroid(img, lista, mostrarEstrela = true) {
     const imgClone = document.createElement('img');
     imgClone.src = cloudinaryUrl(img.dataset.publicId, 400);
     imgClone.alt = img.alt;
+    imgClone.loading = 'lazy';
     polaroid.appendChild(imgClone);
 
     const bandeira = criarBandeira(img.dataset.categoria);
