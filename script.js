@@ -1,3 +1,9 @@
+const CLOUDINARY_CLOUD = 'glecce';
+
+function cloudinaryUrl(publicId, largura) {
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/f_auto,q_auto,w_${largura}/${publicId}`;
+}
+
 function embaralhar(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -110,7 +116,7 @@ pinsMapa.forEach(pin => {
     const fotoDaCategoria = document.querySelector(`.galeria img[data-categoria="${filtro}"]`);
 
     if (fotoDaCategoria) {
-        previewImg.src = fotoDaCategoria.src;
+        previewImg.src = cloudinaryUrl(fotoDaCategoria.dataset.publicId, 220);
         previewImg.alt = fotoDaCategoria.alt;
     } else {
         preview.classList.add('sem-foto');
@@ -164,11 +170,11 @@ function mostrarFoto() {
     const img = listaAtual[indiceAtual];
     const imgProxima = listaAtual[(indiceAtual + 1) % total];
 
-    lightboxImg.src = img.src;
+    lightboxImg.src = cloudinaryUrl(img.dataset.publicId, 1600);
     lightboxImg.alt = img.alt;
-    lightboxImgAnterior.src = imgAnterior.src;
+    lightboxImgAnterior.src = cloudinaryUrl(imgAnterior.dataset.publicId, 500);
     lightboxImgAnterior.alt = imgAnterior.alt;
-    lightboxImgProxima.src = imgProxima.src;
+    lightboxImgProxima.src = cloudinaryUrl(imgProxima.dataset.publicId, 500);
     lightboxImgProxima.alt = imgProxima.alt;
 
     atualizarPainelInfo(img);
@@ -317,7 +323,7 @@ function criarPolaroid(img, lista, mostrarEstrela = true) {
     polaroid.style.setProperty('--desloc', `${Math.round(Math.random() * 12 - 4)}px`);
 
     const imgClone = document.createElement('img');
-    imgClone.src = img.src;
+    imgClone.src = cloudinaryUrl(img.dataset.publicId, 400);
     imgClone.alt = img.alt;
     polaroid.appendChild(imgClone);
 
