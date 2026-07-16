@@ -96,29 +96,29 @@ header {
 }
 
 .filtros-secao {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: center;
-    gap: 34px;
-    flex-wrap: wrap;
+    gap: 20px;
     padding: 10px 20px 0;
 }
 
 .filtros-bloco {
-    flex: 1 1 auto;
+    grid-column: 2;
     max-width: 900px;
 }
 
 .filtros-toggles {
+    grid-column: 3;
     display: flex;
+    justify-self: start;
     gap: 18px;
-    flex-shrink: 0;
 }
 
 .filtro-toggle {
     position: relative;
-    width: 72px;
-    height: 72px;
+    width: 54px;
+    height: 54px;
     border: none;
     background: none;
     cursor: pointer;
@@ -150,13 +150,19 @@ header {
 
 @media (max-width: 800px) {
     .filtros-secao {
-        flex-direction: column;
-        gap: 20px;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 16px;
+    }
+
+    .filtros-bloco,
+    .filtros-toggles {
+        grid-column: 1;
     }
 
     .filtro-toggle {
-        width: 60px;
-        height: 60px;
+        width: 48px;
+        height: 48px;
     }
 }
 
@@ -324,12 +330,9 @@ header {
     padding: 12px 12px 34px;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    transform: rotate(var(--rot, 0deg)) translateY(var(--desloc, 0px));
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-.polaroid:nth-child(3n+1) { transform: rotate(-2.5deg); }
-.polaroid:nth-child(3n+2) { transform: rotate(1.5deg); }
-.polaroid:nth-child(3n) { transform: rotate(-1deg); }
 
 .polaroid:hover {
     transform: rotate(0deg) scale(1.06);
@@ -358,6 +361,29 @@ header {
     filter: none;
     background-color: transparent;
     pointer-events: none;
+}
+
+.bandeira-foto {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    line-height: 1;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+.polaroid .bandeira-foto {
+    top: 20px;
+    left: 20px;
 }
 
 @media (max-width: 800px) {
@@ -607,10 +633,22 @@ header {
     width: 32px;
     height: auto;
     object-fit: contain;
+    background-color: transparent;
     border: none;
     border-radius: 0;
     cursor: default;
     pointer-events: none;
+}
+
+.galeria-item .estrela-favorita,
+.galeria-item .bandeira-foto {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.galeria-item:hover .estrela-favorita,
+.galeria-item:hover .bandeira-foto {
+    opacity: 1;
 }
 
 .rodape{

@@ -21,19 +21,42 @@ const toggleFavoritas = document.getElementById('toggle-favoritas');
 
 const imagensOrdemOriginal = fotosOrdemOriginal.map(item => item.querySelector('img'));
 
-// function criarEstrela() {
-//     const estrela = document.createElement('img');
-//     estrela.className = 'estrela-favorita';
-//     estrela.src = './img_Icones/estrela-favorita.png';
-//     estrela.alt = 'Favorite';
-//     return estrela;
-// }
+const BANDEIRAS = {
+    egito: '🇪🇬',
+    malta: '🇲🇹',
+    atenas: '🇬🇷',
+    barcelona: '🇪🇸',
+    madrid: '🇪🇸',
+    porto: '🇵🇹',
+    sangiovanni: '🇮🇹',
+};
 
-// imagens.forEach(img => {
-//     if (img.dataset.favorita === 'true') {
-//         img.insertAdjacentElement('afterend', criarEstrela());
-//     }
-// });
+function criarEstrela() {
+    const estrela = document.createElement('img');
+    estrela.className = 'estrela-favorita';
+    estrela.src = './img_Icones/estrela-favorita.png';
+    estrela.alt = 'Favorite';
+    return estrela;
+}
+
+function criarBandeira(categoria) {
+    const emoji = BANDEIRAS[categoria];
+    if (!emoji) return null;
+    const bandeira = document.createElement('span');
+    bandeira.className = 'bandeira-foto';
+    bandeira.textContent = emoji;
+    bandeira.setAttribute('aria-hidden', 'true');
+    return bandeira;
+}
+
+imagens.forEach(img => {
+    const wrapper = img.parentElement;
+    const bandeira = criarBandeira(img.dataset.categoria);
+    if (bandeira) wrapper.appendChild(bandeira);
+    if (img.dataset.favorita === 'true') {
+        wrapper.appendChild(criarEstrela());
+    }
+});
 
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
@@ -101,6 +124,9 @@ pinsMapa.forEach(pin => {
         }
     });
 });
+
+const mapaScroll = document.querySelector('.mapa');
+mapaScroll.scrollLeft = (mapaScroll.scrollWidth - mapaScroll.clientWidth) / 2;
 
 const lightbox = document.getElementById('lightbox');
 const lightboxConteudo = document.querySelector('.lightbox-conteudo');
@@ -287,15 +313,20 @@ lightbox.addEventListener('touchcancel', () => { toqueEmAndamento = false; }, { 
 function criarPolaroid(img, lista) {
     const polaroid = document.createElement('figure');
     polaroid.className = 'polaroid';
+    polaroid.style.setProperty('--rot', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
+    polaroid.style.setProperty('--desloc', `${Math.round(Math.random() * 20 - 6)}px`);
 
     const imgClone = document.createElement('img');
     imgClone.src = img.src;
     imgClone.alt = img.alt;
     polaroid.appendChild(imgClone);
 
-    // if (img.dataset.favorita === 'true') {
-    //     polaroid.appendChild(criarEstrela());
-    // }
+    const bandeira = criarBandeira(img.dataset.categoria);
+    if (bandeira) polaroid.appendChild(bandeira);
+
+    if (img.dataset.favorita === 'true') {
+        polaroid.appendChild(criarEstrela());
+    }
 
     polaroid.addEventListener('click', () => abrirLightbox(img, lista));
     return polaroid;
