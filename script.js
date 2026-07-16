@@ -310,11 +310,11 @@ function finalizarToque(evento) {
 lightbox.addEventListener('touchend', finalizarToque, { passive: true });
 lightbox.addEventListener('touchcancel', () => { toqueEmAndamento = false; }, { passive: true });
 
-function criarPolaroid(img, lista) {
+function criarPolaroid(img, lista, mostrarEstrela = true) {
     const polaroid = document.createElement('figure');
     polaroid.className = 'polaroid';
     polaroid.style.setProperty('--rot', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
-    polaroid.style.setProperty('--desloc', `${Math.round(Math.random() * 20 - 6)}px`);
+    polaroid.style.setProperty('--desloc', `${Math.round(Math.random() * 12 - 4)}px`);
 
     const imgClone = document.createElement('img');
     imgClone.src = img.src;
@@ -324,7 +324,7 @@ function criarPolaroid(img, lista) {
     const bandeira = criarBandeira(img.dataset.categoria);
     if (bandeira) polaroid.appendChild(bandeira);
 
-    if (img.dataset.favorita === 'true') {
+    if (mostrarEstrela && img.dataset.favorita === 'true') {
         polaroid.appendChild(criarEstrela());
     }
 
@@ -340,7 +340,7 @@ const favoritas = embaralhar(imagensOrdemOriginal.filter(img => img.dataset.favo
 if (favoritas.length === 0) {
     secaoFavoritas.hidden = true;
 } else {
-    favoritas.forEach(img => carrosselFavoritas.appendChild(criarPolaroid(img, favoritas)));
+    favoritas.forEach(img => carrosselFavoritas.appendChild(criarPolaroid(img, favoritas, false)));
 }
 
 const recentes = imagensOrdemOriginal.slice(-8).reverse();
