@@ -164,14 +164,28 @@ function abrirLightbox(img, lista) {
     document.body.classList.add('sem-scroll');
 }
 
+let tokenFoto = 0;
+
 function mostrarFoto() {
     const total = listaAtual.length;
     const imgAnterior = listaAtual[(indiceAtual - 1 + total) % total];
     const img = listaAtual[indiceAtual];
     const imgProxima = listaAtual[(indiceAtual + 1) % total];
 
-    lightboxImg.src = cloudinaryUrl(img.dataset.publicId, 1600);
+    tokenFoto++;
+    const tokenDestaFoto = tokenFoto;
+
+    lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
+
+    const versaoGrande = new Image();
+    versaoGrande.onload = () => {
+        if (tokenDestaFoto === tokenFoto) {
+            lightboxImg.src = versaoGrande.src;
+        }
+    };
+    versaoGrande.src = cloudinaryUrl(img.dataset.publicId, 1200);
+
     lightboxImgAnterior.src = cloudinaryUrl(imgAnterior.dataset.publicId, 500);
     lightboxImgAnterior.alt = imgAnterior.alt;
     lightboxImgProxima.src = cloudinaryUrl(imgProxima.dataset.publicId, 500);
