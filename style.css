@@ -203,7 +203,8 @@ header {
     color: #fff;
 }
 
-.filtro-btn.ativo[data-filtro="sangiovanni"] {
+.filtro-btn.ativo[data-filtro="sangiovanni"],
+.filtro-btn.ativo[data-filtro="manfredonia"] {
     background-color: var(--color-italia);
     color: #fff;
 }
@@ -515,6 +516,7 @@ header {
 .mapa-pin[data-filtro="madrid"] { --rot: -2deg; --cor: var(--color-espanha); }
 .mapa-pin[data-filtro="porto"] { --rot: 3deg; --cor: var(--color-portugal); }
 .mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; --cor: var(--color-italia); }
+.mapa-pin[data-filtro="manfredonia"] { --rot: 6deg; --cor: var(--color-italia); }
 
 .mapa-pin-preview {
     position: absolute;

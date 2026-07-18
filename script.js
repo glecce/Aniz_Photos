@@ -41,6 +41,7 @@ const BANDEIRAS = {
     madrid: '🇪🇸',
     porto: '🇵🇹',
     sangiovanni: '🇮🇹',
+    manfredonia: '🇮🇹',
 };
 
 function criarEstrela() {
