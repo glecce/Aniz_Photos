@@ -484,6 +484,11 @@ header {
     z-index: 2;
 }
 
+.mapa-pin:hover,
+.mapa-pin:focus-within {
+    z-index: 10;
+}
+
 .mapa-pin-ponto {
     display: block;
     width: 16px;
