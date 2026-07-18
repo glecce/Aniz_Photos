@@ -193,7 +193,7 @@ header {
     color: #fff;
 }
 
-.filtro-btn.ativo[data-filtro="egito"] {
+.filtro-btn.ativo[data-filtro="cairo"] {
     background-color: var(--color-egito);
     color: #fff;
 }
@@ -510,7 +510,7 @@ header {
 }
 
 .mapa-pin[data-filtro="malta"] { --rot: -6deg; --cor: var(--color-malta); }
-.mapa-pin[data-filtro="egito"] { --rot: 4deg; --cor: var(--color-egito); }
+.mapa-pin[data-filtro="cairo"] { --rot: 4deg; --cor: var(--color-egito); }
 .mapa-pin[data-filtro="atenas"] { --rot: -3deg; --cor: var(--color-grecia); }
 .mapa-pin[data-filtro="barcelona"] { --rot: 5deg; --cor: var(--color-espanha); }
 .mapa-pin[data-filtro="madrid"] { --rot: -2deg; --cor: var(--color-espanha); }

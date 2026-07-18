@@ -34,7 +34,7 @@ imagens.forEach(img => {
 });
 
 const BANDEIRAS = {
-    egito: '🇪🇬',
+    cairo: '🇪🇬',
     malta: '🇲🇹',
     atenas: '🇬🇷',
     barcelona: '🇪🇸',
