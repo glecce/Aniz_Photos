@@ -1,7 +1,9 @@
 const CLOUDINARY_CLOUD = 'glecce';
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
 function cloudinaryUrl(publicId, largura) {
-    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/f_auto,q_auto,w_${largura}/${publicId}`;
+    const larguraReal = Math.round(largura * DPR);
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/f_auto,q_auto,w_${larguraReal}/${publicId}`;
 }
 
 function embaralhar(array) {
@@ -26,6 +28,10 @@ const galeriaCompleta = document.querySelector('.galeria_completa');
 const toggleFavoritas = document.getElementById('toggle-favoritas');
 
 const imagensOrdemOriginal = fotosOrdemOriginal.map(item => item.querySelector('img'));
+
+imagens.forEach(img => {
+    img.src = cloudinaryUrl(img.dataset.publicId, 640);
+});
 
 const BANDEIRAS = {
     egito: '🇪🇬',
@@ -76,7 +82,7 @@ function atualizarGaleria() {
         const bateFavorita = !filtroFavoritaAtivo || img.dataset.favorita === 'true';
         const visivel = bateLocal && bateEstilo && bateFavorita;
         img.style.display = visivel ? '' : 'none';
-        img.closest('.galeria-item').style.display = visivel ? '' : 'none';
+        img.parentElement.style.display = visivel ? '' : 'none';
     });
 
     pinsMapa.forEach(pin => {
@@ -91,29 +97,26 @@ toggleFavoritas.addEventListener('click', () => {
     atualizarGaleria();
 });
 
-botoesFiltroLocal.forEach(botao => {
-    botao.addEventListener('click', () => {
-        botoesFiltroLocal.forEach(b => b.classList.remove('ativo'));
-        botao.classList.add('ativo');
-        filtroLocalAtivo = botao.dataset.filtro;
-        atualizarGaleria();
+function configurarGrupoFiltro(botoes, aoClicar) {
+    botoes.forEach(botao => {
+        botao.addEventListener('click', () => {
+            botoes.forEach(b => b.classList.remove('ativo'));
+            botao.classList.add('ativo');
+            aoClicar(botao);
+            atualizarGaleria();
+        });
     });
-});
+}
 
-botoesFiltroEstilo.forEach(botao => {
-    botao.addEventListener('click', () => {
-        botoesFiltroEstilo.forEach(b => b.classList.remove('ativo'));
-        botao.classList.add('ativo');
-        filtroEstiloAtivo = botao.dataset.estilo;
-        atualizarGaleria();
-    });
-});
+configurarGrupoFiltro(botoesFiltroLocal, botao => { filtroLocalAtivo = botao.dataset.filtro; });
+configurarGrupoFiltro(botoesFiltroEstilo, botao => { filtroEstiloAtivo = botao.dataset.estilo; });
 
 pinsMapa.forEach(pin => {
     const filtro = pin.dataset.filtro;
     const preview = pin.querySelector('.mapa-pin-preview');
     const previewImg = pin.querySelector('.mapa-pin-preview-img');
     const fotoDaCategoria = document.querySelector(`.galeria img[data-categoria="${filtro}"]`);
+    const botaoFiltro = document.querySelector(`.filtro-btn[data-filtro="${filtro}"]`);
 
     if (fotoDaCategoria) {
         previewImg.src = cloudinaryUrl(fotoDaCategoria.dataset.publicId, 220);
@@ -123,9 +126,8 @@ pinsMapa.forEach(pin => {
     }
 
     pin.addEventListener('click', () => {
-        const botao = document.querySelector(`.filtro-btn[data-filtro="${filtro}"]`);
-        if (botao) {
-            botao.click();
+        if (botaoFiltro) {
+            botaoFiltro.click();
             galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
         }
     });
