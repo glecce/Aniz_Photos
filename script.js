@@ -20,8 +20,9 @@ const fotos = embaralhar([...fotosOrdemOriginal]);
 
 fotos.forEach(foto => galeria.appendChild(foto));
 
-const botoesFiltroLocal = document.querySelectorAll('.filtro-btn:not(.filtro-estilo)');
+const botoesFiltroLocal = document.querySelectorAll('.filtro-btn:not(.filtro-estilo):not(.filtro-album)');
 const botoesFiltroEstilo = document.querySelectorAll('.filtro-btn.filtro-estilo');
+const botoesFiltroAlbum = document.querySelectorAll('.filtro-btn.filtro-album');
 const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
@@ -42,6 +43,9 @@ const BANDEIRAS = {
     porto: '🇵🇹',
     sangiovanni: '🇮🇹',
     manfredonia: '🇮🇹',
+    paris: '🇫🇷',
+    amsterdam: '🇳🇱',
+    berlim: '🇩🇪',
 };
 
 function criarEstrela() {
@@ -73,6 +77,7 @@ imagens.forEach(img => {
 
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
+let filtroAlbumAtivo = 'todos';
 let filtroFavoritaAtivo = false;
 
 function atualizarGaleria() {
@@ -80,8 +85,10 @@ function atualizarGaleria() {
         const bateLocal = filtroLocalAtivo === 'todos' || img.dataset.categoria === filtroLocalAtivo;
         const estilos = (img.dataset.estilo || '').split(' ');
         const bateEstilo = filtroEstiloAtivo === 'todos' || estilos.includes(filtroEstiloAtivo);
+        const albuns = (img.dataset.album || '').split(' ');
+        const bateAlbum = filtroAlbumAtivo === 'todos' || albuns.includes(filtroAlbumAtivo);
         const bateFavorita = !filtroFavoritaAtivo || img.dataset.favorita === 'true';
-        const visivel = bateLocal && bateEstilo && bateFavorita;
+        const visivel = bateLocal && bateEstilo && bateAlbum && bateFavorita;
         img.style.display = visivel ? '' : 'none';
         img.parentElement.style.display = visivel ? '' : 'none';
     });
@@ -111,6 +118,7 @@ function configurarGrupoFiltro(botoes, aoClicar) {
 
 configurarGrupoFiltro(botoesFiltroLocal, botao => { filtroLocalAtivo = botao.dataset.filtro; });
 configurarGrupoFiltro(botoesFiltroEstilo, botao => { filtroEstiloAtivo = botao.dataset.estilo; });
+configurarGrupoFiltro(botoesFiltroAlbum, botao => { filtroAlbumAtivo = botao.dataset.album; });
 
 pinsMapa.forEach(pin => {
     const filtro = pin.dataset.filtro;
@@ -369,3 +377,17 @@ if (favoritas.length === 0) {
 
 const recentes = imagensOrdemOriginal.slice(-8).reverse();
 recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes)));
+
+document.querySelectorAll('.album-pilha').forEach(pilha => {
+    const album = pilha.dataset.album;
+    const fotos = imagensOrdemOriginal
+        .filter(img => (img.dataset.album || '').split(' ').includes(album))
+        .slice(-3)
+        .reverse();
+
+    const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
+    fotos.forEach((foto, i) => {
+        if (!cartoes[i]) return;
+        cartoes[i].style.backgroundImage = `url(${cloudinaryUrl(foto.dataset.publicId, 400)})`;
+    });
+});

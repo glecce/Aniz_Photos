@@ -9,15 +9,68 @@
     <title>Aniz / Photos</title>
 </head>
 <body>
-    <header>
+    <header id="topo">
         <!-- <img class="cabeca_logo direita" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
-        <h1 class="cabeca_titulo">.Photos</h1>
-        <!-- <nav class="cabeca_menu">
-            <a class="cabeca_menu_botton" href="universe"></a>
-        </nav> -->
+        <nav class="cabeca_menu">
+            <a class="cabeca_menu_link" href="#topo">Home</a>
+            <a class="cabeca_menu_link" href="#albuns">Albums</a>
+            <a class="cabeca_menu_link" href="#secao-favoritas">Favorites</a>
+            <a class="cabeca_menu_link" href="#secao-recentes">Latest</a>
+            <a class="cabeca_menu_link" href="#mapa">Map</a>
+            <a class="cabeca_menu_link" href="#contato">Contact</a>
+        </nav>
+        <a class="cabeca_titulo_link" href="#topo">
+            <h1 class="cabeca_titulo">.Photos</h1>
+        </a>
         <!-- <img class="cabeca_logo esquerda" src="./img_Logo/logo_transparente.png" alt="logo anis estrelado"> -->
     </header>
     <main>
+        <section class="carrossel-secao" id="albuns">
+            <h2 class="carrossel-titulo">Albums</h2>
+            <div class="carrossel albuns-carrossel">
+                <button class="album-pilha" type="button" data-album="casamento">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Wedding</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-album="festa">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Party</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-album="hotel">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Hotel</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-album="ensaios">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Sessions</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-album="restaurantes">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Restaurants</span>
+                    </span>
+                </button>
+            </div>
+        </section>
+
         <section class="carrossel-secao" id="secao-favoritas">
             <h2 class="carrossel-titulo">Favorites</h2>
             <div class="carrossel" id="carrossel-favoritas"></div>
@@ -28,8 +81,8 @@
             <div class="carrossel" id="carrossel-recentes"></div>
         </section>
 
-        <section class="mapa">
-            <!-- <h2 class="mapa-titulo">Explore pelo mapa</h2> -->
+        <section class="mapa" id="mapa">
+            <h2 class="carrossel-titulo">Map</h2>
             <div class="mapa-wrapper" id="mapa-wrapper">
             <svg version="1.1"
                  xmlns="http://www.w3.org/2000/svg"
@@ -487,6 +540,27 @@
                     <span class="mapa-pin-preview-label">Manfredonia</span>
                 </span>
             </button>
+            <button class="mapa-pin" data-filtro="paris" style="left: 48.6%; top: 34.9%;" aria-label="See photos from Paris">
+                <span class="mapa-pin-ponto"></span>
+                <span class="mapa-pin-preview">
+                    <img class="mapa-pin-preview-img" data-preview="paris" src="" alt="">
+                    <span class="mapa-pin-preview-label">Paris</span>
+                </span>
+            </button>
+            <button class="mapa-pin" data-filtro="amsterdam" style="left: 49.3%; top: 32.8%;" aria-label="See photos from Amsterdam">
+                <span class="mapa-pin-ponto"></span>
+                <span class="mapa-pin-preview">
+                    <img class="mapa-pin-preview-img" data-preview="amsterdam" src="" alt="">
+                    <span class="mapa-pin-preview-label">Amsterdam</span>
+                </span>
+            </button>
+            <button class="mapa-pin" data-filtro="berlim" style="left: 51.6%; top: 32.8%;" aria-label="See photos from Berlin">
+                <span class="mapa-pin-ponto"></span>
+                <span class="mapa-pin-preview">
+                    <img class="mapa-pin-preview-img" data-preview="berlim" src="" alt="">
+                    <span class="mapa-pin-preview-label">Berlin</span>
+                </span>
+            </button>
             </div>
             <!-- <p class="mapa-credito">Mapa: Al MacDonald / Fritz Lekschas (CC BY-SA 3.0)</p> -->
         </section>
@@ -505,6 +579,9 @@
                     <button class="filtro-btn" data-filtro="porto">🇵🇹 Porto</button>
                     <button class="filtro-btn" data-filtro="sangiovanni">🇮🇹 San Giovanni Rotondo</button>
                     <button class="filtro-btn" data-filtro="manfredonia">🇮🇹 Manfredonia</button>
+                    <button class="filtro-btn" data-filtro="paris">🇫🇷 Paris</button>
+                    <button class="filtro-btn" data-filtro="amsterdam">🇳🇱 Amsterdam</button>
+                    <button class="filtro-btn" data-filtro="berlim">🇩🇪 Berlin</button>
 
                 </nav>
 
@@ -517,6 +594,18 @@
                     <button class="filtro-btn filtro-estilo" data-estilo="humano">People</button>
                     <button class="filtro-btn filtro-estilo" data-estilo="animais">Animals</button>
                     <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="experimental">Experimental</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="retratos">Portraits</button>
+                </nav>
+
+                <p class="filtros-legenda">Albums</p>
+                <nav class="filtros">
+                    <button class="filtro-btn filtro-album ativo" data-album="todos">All</button>
+                    <button class="filtro-btn filtro-album" data-album="casamento">Wedding</button>
+                    <button class="filtro-btn filtro-album" data-album="festa">Party</button>
+                    <button class="filtro-btn filtro-album" data-album="hotel">Hotel</button>
+                    <button class="filtro-btn filtro-album" data-album="ensaios">Sessions</button>
+                    <button class="filtro-btn filtro-album" data-album="restaurantes">Restaurants</button>
                 </nav>
             </div>
 
@@ -610,6 +699,16 @@
 
             </div>
 
+        </section>
+
+        <section class="contato-secao" id="contato">
+            <p class="filtros-legenda">Contact</p>
+            <h2 class="contato-titulo">Let's talk about your album</h2>
+            <p class="contato-texto">Weddings, parties, hospitality, portraits or something experimental — reach out and let's plan it together.</p>
+            <div class="contato-links">
+                <a class="contato-link" href="mailto:your@email.com">your@email.com</a>
+                <a class="contato-link" href="https://instagram.com/onesecondshutter" target="_blank" rel="noopener">@onesecondshutter</a>
+            </div>
         </section>
 
     </main>

@@ -5,6 +5,8 @@
     --color-secundaria: #b39c65;
     --color-terciaria: #718dc4;
     --color-quaternaria: #b5623c;
+    --color-quinaria: #a97c8a;
+    --color-senaria: #8f4050;
     --color-bg: #FFEED6;
     --color-text-primaria: #000000;
     --font-principal:'Special Elite';
@@ -15,6 +17,10 @@
     --color-italia: #3f7d4a;
     --color-grecia: #8c8c8c;
     --color-portugal: #b3382c;
+    --color-franca: #3d5a99;
+    --color-holanda: #d98c3d;
+    --color-alemanha: #3a3a3a;
+    --color-setenaria: #7d7396;
 }
 
 
@@ -23,6 +29,10 @@
     padding: 0;
     box-sizing: border-box;
     background-color: var(--color-bg);
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 html, body {
@@ -45,6 +55,7 @@ body.sem-scroll {
 
 header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -54,6 +65,33 @@ header {
     align-self: center;
 }
 
+.cabeca_menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+    padding: 24px 20px 0;
+}
+
+.cabeca_menu_link {
+    font-family: var(--font-principal);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-primaria);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.cabeca_menu_link:hover {
+    opacity: 1;
+}
+
+.cabeca_titulo_link {
+    text-decoration: none;
+    color: inherit;
+}
 
 .cabeca_titulo{
     padding: 40px 60px;
@@ -70,19 +108,17 @@ header {
 
 
     
-.filtros-legenda {
+.filtros-legenda,
+.carrossel-titulo {
     text-align: center;
     font-family: var(--font-principal);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     opacity: 0.55;
-    margin-top: 1.2em;
-    margin-bottom: 0.4em;
-}
-
-.filtros-legenda:first-of-type {
-    margin-top: 0;
+    margin-top: 1.6em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
 }
 
 .filtros {
@@ -219,13 +255,30 @@ header {
     color: #fff;
 }
 
+.filtro-btn.ativo[data-filtro="paris"] {
+    background-color: var(--color-franca);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="amsterdam"] {
+    background-color: var(--color-holanda);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="berlim"] {
+    background-color: var(--color-alemanha);
+    color: #fff;
+}
+
 /* Identidade visual dos filtros de estilo: um contorno delicado na cor temática, reaproveitando a paleta do site */
 .filtro-btn.filtro-estilo[data-estilo="colorido"],
 .filtro-btn.filtro-estilo[data-estilo="preto-e-branco"],
 .filtro-btn.filtro-estilo[data-estilo="animais"],
 .filtro-btn.filtro-estilo[data-estilo="humano"],
 .filtro-btn.filtro-estilo[data-estilo="paisagem"],
-.filtro-btn.filtro-estilo[data-estilo="objeto"] {
+.filtro-btn.filtro-estilo[data-estilo="objeto"],
+.filtro-btn.filtro-estilo[data-estilo="experimental"],
+.filtro-btn.filtro-estilo[data-estilo="retratos"] {
     border-width: 1.5px;
 }
 
@@ -257,6 +310,19 @@ header {
 
 .filtro-btn.filtro-estilo[data-estilo="objeto"] {
     border-color: var(--color-quaternaria);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="experimental"] {
+    border-color: transparent;
+    background-image:
+        linear-gradient(var(--color-bg), var(--color-bg)),
+        linear-gradient(45deg, var(--color-quinaria), var(--color-senaria));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.filtro-btn.filtro-estilo[data-estilo="retratos"] {
+    border-color: var(--color-setenaria);
 }
 
 .filtro-btn.filtro-estilo[data-estilo="colorido"]:hover,
@@ -298,18 +364,66 @@ header {
     color: #fff;
 }
 
-.carrossel-secao {
-    padding: 10px 0 0;
+.filtro-btn.filtro-estilo[data-estilo="experimental"]:hover,
+.filtro-btn.ativo[data-estilo="experimental"] {
+    background: linear-gradient(45deg, var(--color-quinaria), var(--color-senaria));
+    border-color: transparent;
+    color: #fff;
 }
 
-.carrossel-titulo {
-    text-align: center;
-    font-family: var(--font-principal);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.55;
-    margin-bottom: 0.6em;
+.filtro-btn.filtro-estilo[data-estilo="retratos"]:hover,
+.filtro-btn.ativo[data-estilo="retratos"] {
+    background-color: var(--color-setenaria);
+    color: #fff;
+}
+
+/* Identidade visual dos filtros de album: mesmas cores das pilhas de polaroid na section Albums */
+.filtro-btn.filtro-album[data-album="casamento"],
+.filtro-btn.filtro-album[data-album="festa"],
+.filtro-btn.filtro-album[data-album="hotel"],
+.filtro-btn.filtro-album[data-album="ensaios"],
+.filtro-btn.filtro-album[data-album="restaurantes"] {
+    border-width: 1.5px;
+}
+
+.filtro-btn.filtro-album[data-album="casamento"] { border-color: var(--color-terciaria); }
+.filtro-btn.filtro-album[data-album="festa"] { border-color: var(--color-quaternaria); }
+.filtro-btn.filtro-album[data-album="hotel"] { border-color: var(--color-principal); }
+.filtro-btn.filtro-album[data-album="ensaios"] { border-color: var(--color-quinaria); }
+.filtro-btn.filtro-album[data-album="restaurantes"] { border-color: var(--color-senaria); }
+
+.filtro-btn.filtro-album[data-album="casamento"]:hover,
+.filtro-btn.ativo[data-album="casamento"] {
+    background-color: var(--color-terciaria);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="festa"]:hover,
+.filtro-btn.ativo[data-album="festa"] {
+    background-color: var(--color-quaternaria);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="hotel"]:hover,
+.filtro-btn.ativo[data-album="hotel"] {
+    background-color: var(--color-principal);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="ensaios"]:hover,
+.filtro-btn.ativo[data-album="ensaios"] {
+    background-color: var(--color-quinaria);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="restaurantes"]:hover,
+.filtro-btn.ativo[data-album="restaurantes"] {
+    background-color: var(--color-senaria);
+    color: #fff;
+}
+
+.carrossel-secao {
+    padding: 10px 0 0;
 }
 
 .carrossel {
@@ -386,6 +500,93 @@ header {
     left: 20px;
 }
 
+.albuns-carrossel {
+    padding: 24px 40px 60px;
+}
+
+.album-pilha {
+    position: relative;
+    flex: 0 0 auto;
+    display: block;
+    width: 220px;
+    height: 250px;
+    border: none;
+    padding: 0;
+    font: inherit;
+    text-decoration: none;
+    cursor: default;
+    z-index: 1;
+}
+
+.album-pilha:hover {
+    z-index: 5;
+}
+
+.album-cartao {
+    position: absolute;
+    inset: 0;
+    background-color: #fffdf7;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+    padding: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.album-pilha .album-cartao:nth-child(1) {
+    transform: rotate(-8deg) translate(-10px, 8px);
+    z-index: 1;
+}
+
+.album-pilha .album-cartao:nth-child(2) {
+    transform: rotate(6deg) translate(9px, 5px);
+    z-index: 2;
+}
+
+.album-cartao-topo {
+    transform: rotate(-1deg);
+    z-index: 3;
+    padding: 12px 12px 38px;
+}
+
+.album-pilha:hover .album-cartao:nth-child(1) {
+    transform: rotate(-12deg) translate(-24px, 10px);
+}
+
+.album-pilha:hover .album-cartao:nth-child(2) {
+    transform: rotate(10deg) translate(22px, 8px);
+}
+
+.album-pilha:hover .album-cartao-topo {
+    transform: rotate(-1deg) translateY(-6px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+.album-cartao-cor {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-terciaria);
+    background-size: cover;
+    background-position: center;
+}
+
+.album-pilha[data-album="casamento"] .album-cartao-cor { background-color: var(--color-terciaria); }
+.album-pilha[data-album="festa"] .album-cartao-cor { background-color: var(--color-quaternaria); }
+.album-pilha[data-album="hotel"] .album-cartao-cor { background-color: var(--color-principal); }
+.album-pilha[data-album="ensaios"] .album-cartao-cor { background-color: var(--color-quinaria); }
+.album-pilha[data-album="restaurantes"] .album-cartao-cor { background-color: var(--color-senaria); }
+
+.album-titulo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    text-align: center;
+    font-family: var(--font-principal);
+    font-size: 0.9rem;
+    color: var(--color-text-primaria);
+    background-color: transparent;
+}
+
 @media (max-width: 800px) {
     .carrossel {
         gap: 18px;
@@ -400,17 +601,16 @@ header {
     .polaroid img {
         height: 150px;
     }
+
+    .album-pilha {
+        width: 180px;
+        height: 210px;
+    }
 }
 
 .mapa {
     padding: 20px 60px;
     text-align: center;
-}
-
-.mapa-titulo {
-    font-family: var(--font-principal);
-    font-size: 1.3rem;
-    margin-bottom: 1em;
 }
 
 .mapa-wrapper {
@@ -475,6 +675,19 @@ header {
     fill: var(--color-portugal);
 }
 
+.mapa-wrapper svg g#fr path,
+.mapa-wrapper svg path#fr {
+    fill: var(--color-franca);
+}
+
+.mapa-wrapper svg path#nl {
+    fill: var(--color-holanda);
+}
+
+.mapa-wrapper svg path#de {
+    fill: var(--color-alemanha);
+}
+
 .mapa-pin {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -517,6 +730,9 @@ header {
 .mapa-pin[data-filtro="porto"] { --rot: 3deg; --cor: var(--color-portugal); }
 .mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; --cor: var(--color-italia); }
 .mapa-pin[data-filtro="manfredonia"] { --rot: 6deg; --cor: var(--color-italia); }
+.mapa-pin[data-filtro="paris"] { --rot: -5deg; --cor: var(--color-franca); }
+.mapa-pin[data-filtro="amsterdam"] { --rot: 4deg; --cor: var(--color-holanda); }
+.mapa-pin[data-filtro="berlim"] { --rot: -3deg; --cor: var(--color-alemanha); }
 
 .mapa-pin-preview {
     position: absolute;
@@ -655,6 +871,51 @@ header {
 .galeria-item:hover .estrela-favorita,
 .galeria-item:hover .bandeira-foto {
     opacity: 1;
+}
+
+.contato-secao {
+    text-align: center;
+    padding: 20px 20px 10px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.contato-titulo {
+    font-family: var(--font-principal);
+    font-size: 1.5rem;
+    margin-bottom: 0.6em;
+}
+
+.contato-texto {
+    font-family: var(--font-principal);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    margin-bottom: 1.2em;
+}
+
+.contato-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+}
+
+.contato-link {
+    font-family: var(--font-principal);
+    font-size: 0.95rem;
+    color: var(--color-text-primaria);
+    border: 1px solid var(--color-text-primaria);
+    border-radius: 5px;
+    padding: 0.6em 1.4em;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, scale 0.2s ease;
+}
+
+.contato-link:hover {
+    background: var(--color-terciaria);
+    color: #fff;
+    scale: 1.05;
 }
 
 .rodape{
