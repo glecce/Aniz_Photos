@@ -14,8 +14,6 @@
         <nav class="cabeca_menu">
             <a class="cabeca_menu_link" href="#topo">Home</a>
             <a class="cabeca_menu_link" href="#albuns">Albums</a>
-            <a class="cabeca_menu_link" href="#secao-favoritas">Favorites</a>
-            <a class="cabeca_menu_link" href="#secao-recentes">Latest</a>
             <a class="cabeca_menu_link" href="#mapa">Map</a>
             <a class="cabeca_menu_link" href="#contato">Contact</a>
         </nav>
@@ -27,6 +25,8 @@
     <main>
         <section class="carrossel-secao" id="albuns">
             <h2 class="carrossel-titulo">Albums</h2>
+
+            <p class="filtros-legenda">Works</p>
             <div class="carrossel albuns-carrossel">
                 <button class="album-pilha" type="button" data-album="casamento">
                     <span class="album-cartao"><span class="album-cartao-cor"></span></span>
@@ -68,6 +68,130 @@
                         <span class="album-titulo">Restaurants</span>
                     </span>
                 </button>
+                <button class="album-pilha" type="button" data-album="marca">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Brand</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-album="nude">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Nude</span>
+                    </span>
+                </button>
+            </div>
+
+            <p class="filtros-legenda">Styles &amp; Favorites</p>
+            <div class="carrossel albuns-carrossel">
+                <button class="album-pilha" type="button" data-favoritos>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Favorites</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="paisagem">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Landscape</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="preto-e-branco">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Black and White</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="colorido">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Color</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="humano">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">People</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="animais">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Animals</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="objeto">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Object</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="experimental">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Experimental</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="retratos">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Portraits</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="plantas">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Plants</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-estilo="arquitetura">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Architecture</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-periodo="dia">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Day</span>
+                    </span>
+                </button>
+                <button class="album-pilha" type="button" data-periodo="noite">
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao"><span class="album-cartao-cor"></span></span>
+                    <span class="album-cartao album-cartao-topo">
+                        <span class="album-cartao-cor"></span>
+                        <span class="album-titulo">Night</span>
+                    </span>
+                </button>
             </div>
         </section>
 
@@ -81,8 +205,8 @@
             <div class="carrossel" id="carrossel-recentes"></div>
         </section>
 
+        <h2 class="carrossel-titulo">Map</h2>
         <section class="mapa" id="mapa">
-            <h2 class="carrossel-titulo">Map</h2>
             <div class="mapa-wrapper" id="mapa-wrapper">
             <svg version="1.1"
                  xmlns="http://www.w3.org/2000/svg"
@@ -565,7 +689,12 @@
             <!-- <p class="mapa-credito">Mapa: Al MacDonald / Fritz Lekschas (CC BY-SA 3.0)</p> -->
         </section>
 
+        <h2 class="carrossel-titulo">Gallery</h2>
         <div class="filtros-secao">
+            <div class="filtros-favorita-esquerda">
+                <button class="filtro-toggle filtro-toggle-favorita" id="toggle-favoritas" type="button" aria-pressed="false" aria-label="Show only favorites"></button>
+            </div>
+
             <div class="filtros-bloco">
                 <p class="filtros-legenda">Where</p>
                 <nav class="filtros">
@@ -596,9 +725,11 @@
                     <button class="filtro-btn filtro-estilo" data-estilo="objeto">Object</button>
                     <button class="filtro-btn filtro-estilo" data-estilo="experimental">Experimental</button>
                     <button class="filtro-btn filtro-estilo" data-estilo="retratos">Portraits</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="plantas">Plants</button>
+                    <button class="filtro-btn filtro-estilo" data-estilo="arquitetura">Architecture</button>
                 </nav>
 
-                <p class="filtros-legenda">Albums</p>
+                <p class="filtros-legenda">Works</p>
                 <nav class="filtros">
                     <button class="filtro-btn filtro-album ativo" data-album="todos">All</button>
                     <button class="filtro-btn filtro-album" data-album="casamento">Wedding</button>
@@ -606,11 +737,52 @@
                     <button class="filtro-btn filtro-album" data-album="hotel">Hotel</button>
                     <button class="filtro-btn filtro-album" data-album="ensaios">Sessions</button>
                     <button class="filtro-btn filtro-album" data-album="restaurantes">Restaurants</button>
+                    <button class="filtro-btn filtro-album" data-album="marca">Brand</button>
+                    <button class="filtro-btn filtro-album" data-album="nude">Nude</button>
                 </nav>
             </div>
 
             <div class="filtros-toggles">
-                <button class="filtro-toggle filtro-toggle-favorita" id="toggle-favoritas" type="button" aria-pressed="false" aria-label="Show only favorites"></button>
+                <div class="filtro-toggle-periodo-grupo" role="group" aria-label="Filter by day or night">
+                    <button class="filtro-toggle filtro-toggle-periodo filtro-toggle-periodo-todos ativo" type="button" data-periodo="todos" aria-label="Show day and night">
+                        <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <g class="icone-raios">
+                                <line x1="12" y1="1" x2="12" y2="4"></line>
+                                <line x1="12" y1="20" x2="12" y2="23"></line>
+                                <line x1="1" y1="12" x2="4" y2="12"></line>
+                                <line x1="20" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"></line>
+                                <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"></line>
+                                <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"></line>
+                                <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"></line>
+                            </g>
+                        </svg>
+                        <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5Z"></path>
+                        </svg>
+                    </button>
+                    <button class="filtro-toggle filtro-toggle-periodo filtro-toggle-dia" type="button" data-periodo="dia" aria-label="Show only day photos">
+                        <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <g class="icone-raios">
+                                <line x1="12" y1="1" x2="12" y2="4"></line>
+                                <line x1="12" y1="20" x2="12" y2="23"></line>
+                                <line x1="1" y1="12" x2="4" y2="12"></line>
+                                <line x1="20" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"></line>
+                                <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"></line>
+                                <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"></line>
+                                <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"></line>
+                            </g>
+                        </svg>
+                    </button>
+                    <button class="filtro-toggle filtro-toggle-periodo filtro-toggle-noite" type="button" data-periodo="noite" aria-label="Show only night photos">
+                        <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5Z"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -662,7 +834,7 @@
                 </div>
 
                 <div class="galeria-item">
-                    <img src="https://res.cloudinary.com/glecce/image/upload/f_auto,q_auto,w_640/DSC02965.jpg" data-public-id="DSC02965" loading="lazy" alt="Gato de rua no sol em Athenas" data-favorita="false" data-categoria="atenas" data-estilo="animais preto-e-branco"
+                    <img src="https://res.cloudinary.com/glecce/image/upload/f_auto,q_auto,w_640/DSC02965.jpg" data-public-id="DSC02965" loading="lazy" alt="Gato de rua no sol em Athenas" data-favorita="false" data-periodo="dia" data-categoria="atenas" data-estilo="animais preto-e-branco"
                         data-data="" data-camera="Sony-A7IV" data-lente="" data-iso="" data-foco="" data-obturador="">
                 </div>
 

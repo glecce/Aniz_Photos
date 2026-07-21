@@ -23,6 +23,7 @@ fotos.forEach(foto => galeria.appendChild(foto));
 const botoesFiltroLocal = document.querySelectorAll('.filtro-btn:not(.filtro-estilo):not(.filtro-album)');
 const botoesFiltroEstilo = document.querySelectorAll('.filtro-btn.filtro-estilo');
 const botoesFiltroAlbum = document.querySelectorAll('.filtro-btn.filtro-album');
+const botoesFiltroPeriodo = document.querySelectorAll('.filtro-toggle-periodo');
 const imagens = document.querySelectorAll('.galeria img');
 const pinsMapa = document.querySelectorAll('.mapa-pin');
 const galeriaCompleta = document.querySelector('.galeria_completa');
@@ -78,6 +79,7 @@ imagens.forEach(img => {
 let filtroLocalAtivo = 'todos';
 let filtroEstiloAtivo = 'todos';
 let filtroAlbumAtivo = 'todos';
+let filtroPeriodoAtivo = 'todos';
 let filtroFavoritaAtivo = false;
 
 function atualizarGaleria() {
@@ -87,8 +89,9 @@ function atualizarGaleria() {
         const bateEstilo = filtroEstiloAtivo === 'todos' || estilos.includes(filtroEstiloAtivo);
         const albuns = (img.dataset.album || '').split(' ');
         const bateAlbum = filtroAlbumAtivo === 'todos' || albuns.includes(filtroAlbumAtivo);
+        const batePeriodo = filtroPeriodoAtivo === 'todos' || img.dataset.periodo === filtroPeriodoAtivo;
         const bateFavorita = !filtroFavoritaAtivo || img.dataset.favorita === 'true';
-        const visivel = bateLocal && bateEstilo && bateAlbum && bateFavorita;
+        const visivel = bateLocal && bateEstilo && bateAlbum && batePeriodo && bateFavorita;
         img.style.display = visivel ? '' : 'none';
         img.parentElement.style.display = visivel ? '' : 'none';
     });
@@ -119,6 +122,7 @@ function configurarGrupoFiltro(botoes, aoClicar) {
 configurarGrupoFiltro(botoesFiltroLocal, botao => { filtroLocalAtivo = botao.dataset.filtro; });
 configurarGrupoFiltro(botoesFiltroEstilo, botao => { filtroEstiloAtivo = botao.dataset.estilo; });
 configurarGrupoFiltro(botoesFiltroAlbum, botao => { filtroAlbumAtivo = botao.dataset.album; });
+configurarGrupoFiltro(botoesFiltroPeriodo, botao => { filtroPeriodoAtivo = botao.dataset.periodo; });
 
 pinsMapa.forEach(pin => {
     const filtro = pin.dataset.filtro;
@@ -379,11 +383,23 @@ const recentes = imagensOrdemOriginal.slice(-8).reverse();
 recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes)));
 
 document.querySelectorAll('.album-pilha').forEach(pilha => {
-    const album = pilha.dataset.album;
-    const fotos = imagensOrdemOriginal
-        .filter(img => (img.dataset.album || '').split(' ').includes(album))
-        .slice(-3)
-        .reverse();
+    let fotosFonte;
+    if (pilha.dataset.album) {
+        const album = pilha.dataset.album;
+        fotosFonte = imagensOrdemOriginal.filter(img => (img.dataset.album || '').split(' ').includes(album));
+    } else if (pilha.dataset.estilo) {
+        const estilo = pilha.dataset.estilo;
+        fotosFonte = imagensOrdemOriginal.filter(img => (img.dataset.estilo || '').split(' ').includes(estilo));
+    } else if (pilha.dataset.periodo) {
+        const periodo = pilha.dataset.periodo;
+        fotosFonte = imagensOrdemOriginal.filter(img => img.dataset.periodo === periodo);
+    } else if (pilha.hasAttribute('data-favoritos')) {
+        fotosFonte = imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true');
+    } else {
+        fotosFonte = [];
+    }
+
+    const fotos = embaralhar([...fotosFonte]).slice(0, 3);
 
     const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
     fotos.forEach((foto, i) => {

@@ -21,6 +21,12 @@
     --color-holanda: #d98c3d;
     --color-alemanha: #3a3a3a;
     --color-setenaria: #7d7396;
+    --color-oitava: #4a5759;
+    --color-nona: #c98a6b;
+    --color-decima: #3d6b4f;
+    --color-undecima: #6e7583;
+    --color-duodecima: #f0b429;
+    --color-tredecima: #1f2a44;
 }
 
 
@@ -112,13 +118,23 @@ header {
 .carrossel-titulo {
     text-align: center;
     font-family: var(--font-principal);
-    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.55;
     margin-top: 1.6em;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.6em;
     line-height: 1.4;
+}
+
+.carrossel-titulo {
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+}
+
+.filtros-legenda {
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    opacity: 0.5;
+    margin-top: 1.2em;
 }
 
 .filtros {
@@ -140,6 +156,11 @@ header {
 .filtros-bloco {
     grid-column: 2;
     max-width: 900px;
+}
+
+.filtros-favorita-esquerda {
+    grid-column: 1;
+    justify-self: end;
 }
 
 .filtros-toggles {
@@ -182,6 +203,89 @@ header {
     background-color: #f0a020;
 }
 
+.filtro-toggle-periodo-grupo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filtro-toggle-periodo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 54px;
+    height: 54px;
+}
+
+.filtro-toggle-periodo svg {
+    width: 38px;
+    height: 38px;
+    overflow: visible;
+}
+
+.icone-sol circle {
+    fill: none;
+    stroke: var(--color-duodecima);
+    stroke-width: 1.6;
+    transition: fill 0.2s ease;
+}
+
+.icone-sol .icone-raios line {
+    stroke: var(--color-duodecima);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+}
+
+.icone-lua path {
+    fill: none;
+    stroke: var(--color-tredecima);
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    transition: fill 0.2s ease;
+}
+
+.filtro-toggle-dia.ativo .icone-sol circle {
+    fill: var(--color-duodecima);
+}
+
+.filtro-toggle-dia.ativo .icone-sol .icone-raios line {
+    opacity: 1;
+}
+
+.filtro-toggle-noite.ativo .icone-lua path {
+    fill: var(--color-tredecima);
+}
+
+.filtro-toggle-periodo-todos {
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+}
+
+.filtro-toggle-periodo-todos svg {
+    width: 26px;
+    height: 26px;
+}
+
+.filtro-toggle-periodo-todos .icone-sol circle {
+    fill: var(--color-duodecima);
+    stroke: none;
+}
+
+.filtro-toggle-periodo-todos .icone-sol .icone-raios line {
+    opacity: 1;
+}
+
+.filtro-toggle-periodo-todos .icone-lua path {
+    fill: var(--color-tredecima);
+}
+
+.filtro-toggle-periodo-todos.ativo {
+    opacity: 1;
+}
+
 @media (max-width: 800px) {
     .filtros-secao {
         grid-template-columns: 1fr;
@@ -190,6 +294,7 @@ header {
     }
 
     .filtros-bloco,
+    .filtros-favorita-esquerda,
     .filtros-toggles {
         grid-column: 1;
         justify-self: center;
@@ -278,7 +383,9 @@ header {
 .filtro-btn.filtro-estilo[data-estilo="paisagem"],
 .filtro-btn.filtro-estilo[data-estilo="objeto"],
 .filtro-btn.filtro-estilo[data-estilo="experimental"],
-.filtro-btn.filtro-estilo[data-estilo="retratos"] {
+.filtro-btn.filtro-estilo[data-estilo="retratos"],
+.filtro-btn.filtro-estilo[data-estilo="plantas"],
+.filtro-btn.filtro-estilo[data-estilo="arquitetura"] {
     border-width: 1.5px;
 }
 
@@ -323,6 +430,14 @@ header {
 
 .filtro-btn.filtro-estilo[data-estilo="retratos"] {
     border-color: var(--color-setenaria);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="plantas"] {
+    border-color: var(--color-decima);
+}
+
+.filtro-btn.filtro-estilo[data-estilo="arquitetura"] {
+    border-color: var(--color-undecima);
 }
 
 .filtro-btn.filtro-estilo[data-estilo="colorido"]:hover,
@@ -377,12 +492,26 @@ header {
     color: #fff;
 }
 
+.filtro-btn.filtro-estilo[data-estilo="plantas"]:hover,
+.filtro-btn.ativo[data-estilo="plantas"] {
+    background-color: var(--color-decima);
+    color: #fff;
+}
+
+.filtro-btn.filtro-estilo[data-estilo="arquitetura"]:hover,
+.filtro-btn.ativo[data-estilo="arquitetura"] {
+    background-color: var(--color-undecima);
+    color: #fff;
+}
+
 /* Identidade visual dos filtros de album: mesmas cores das pilhas de polaroid na section Albums */
 .filtro-btn.filtro-album[data-album="casamento"],
 .filtro-btn.filtro-album[data-album="festa"],
 .filtro-btn.filtro-album[data-album="hotel"],
 .filtro-btn.filtro-album[data-album="ensaios"],
-.filtro-btn.filtro-album[data-album="restaurantes"] {
+.filtro-btn.filtro-album[data-album="restaurantes"],
+.filtro-btn.filtro-album[data-album="marca"],
+.filtro-btn.filtro-album[data-album="nude"] {
     border-width: 1.5px;
 }
 
@@ -391,6 +520,8 @@ header {
 .filtro-btn.filtro-album[data-album="hotel"] { border-color: var(--color-principal); }
 .filtro-btn.filtro-album[data-album="ensaios"] { border-color: var(--color-quinaria); }
 .filtro-btn.filtro-album[data-album="restaurantes"] { border-color: var(--color-senaria); }
+.filtro-btn.filtro-album[data-album="marca"] { border-color: var(--color-oitava); }
+.filtro-btn.filtro-album[data-album="nude"] { border-color: var(--color-nona); }
 
 .filtro-btn.filtro-album[data-album="casamento"]:hover,
 .filtro-btn.ativo[data-album="casamento"] {
@@ -419,6 +550,18 @@ header {
 .filtro-btn.filtro-album[data-album="restaurantes"]:hover,
 .filtro-btn.ativo[data-album="restaurantes"] {
     background-color: var(--color-senaria);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="marca"]:hover,
+.filtro-btn.ativo[data-album="marca"] {
+    background-color: var(--color-oitava);
+    color: #fff;
+}
+
+.filtro-btn.filtro-album[data-album="nude"]:hover,
+.filtro-btn.ativo[data-album="nude"] {
+    background-color: var(--color-nona);
     color: #fff;
 }
 
@@ -574,6 +717,26 @@ header {
 .album-pilha[data-album="hotel"] .album-cartao-cor { background-color: var(--color-principal); }
 .album-pilha[data-album="ensaios"] .album-cartao-cor { background-color: var(--color-quinaria); }
 .album-pilha[data-album="restaurantes"] .album-cartao-cor { background-color: var(--color-senaria); }
+.album-pilha[data-album="marca"] .album-cartao-cor { background-color: var(--color-oitava); }
+.album-pilha[data-album="nude"] .album-cartao-cor { background-color: var(--color-nona); }
+
+.album-pilha[data-favoritos] .album-cartao-cor { background-color: #f0a020; }
+.album-pilha[data-estilo="paisagem"] .album-cartao-cor { background-color: var(--color-principal); }
+.album-pilha[data-estilo="preto-e-branco"] .album-cartao-cor { background-color: #1a1a1a; }
+.album-pilha[data-estilo="colorido"] .album-cartao-cor {
+    background-image: linear-gradient(120deg, #d9584c, #e0a24f, #d9c257, #7fa966, #4f8fbd, #8266a8);
+}
+.album-pilha[data-estilo="humano"] .album-cartao-cor { background-color: var(--color-terciaria); }
+.album-pilha[data-estilo="animais"] .album-cartao-cor { background-color: var(--color-secundaria); }
+.album-pilha[data-estilo="objeto"] .album-cartao-cor { background-color: var(--color-quaternaria); }
+.album-pilha[data-estilo="experimental"] .album-cartao-cor {
+    background-image: linear-gradient(120deg, var(--color-quinaria), var(--color-senaria));
+}
+.album-pilha[data-estilo="retratos"] .album-cartao-cor { background-color: var(--color-setenaria); }
+.album-pilha[data-estilo="plantas"] .album-cartao-cor { background-color: var(--color-decima); }
+.album-pilha[data-estilo="arquitetura"] .album-cartao-cor { background-color: var(--color-undecima); }
+.album-pilha[data-periodo="dia"] .album-cartao-cor { background-color: var(--color-duodecima); }
+.album-pilha[data-periodo="noite"] .album-cartao-cor { background-color: var(--color-tredecima); }
 
 .album-titulo {
     position: absolute;
@@ -647,7 +810,7 @@ header {
     transition: fill 0.2s ease;
 }
 
-.mapa-wrapper svg g#es path,
+.mapa-wrapper svg g#es path.mainland,
 .mapa-wrapper svg path#es {
     fill: var(--color-espanha);
 }
@@ -660,12 +823,12 @@ header {
     fill: var(--color-malta);
 }
 
-.mapa-wrapper svg g#it path,
+.mapa-wrapper svg g#it path.mainland,
 .mapa-wrapper svg path#it {
     fill: var(--color-italia);
 }
 
-.mapa-wrapper svg g#gr path,
+.mapa-wrapper svg g#gr path.mainland,
 .mapa-wrapper svg path#gr {
     fill: var(--color-grecia);
 }
@@ -675,7 +838,7 @@ header {
     fill: var(--color-portugal);
 }
 
-.mapa-wrapper svg g#fr path,
+.mapa-wrapper svg g#fr path.mainland,
 .mapa-wrapper svg path#fr {
     fill: var(--color-franca);
 }
