@@ -14,11 +14,13 @@ function embaralhar(array) {
     return array;
 }
 
-const galeria = document.querySelector('.galeria');
-const fotosOrdemOriginal = Array.from(galeria.children);
+const galeria = document.querySelector('#dados-fotos, .galeria');
+const fotosOrdemOriginal = galeria ? Array.from(galeria.children) : [];
 const fotos = embaralhar([...fotosOrdemOriginal]);
 
-fotos.forEach(foto => galeria.appendChild(foto));
+if (galeria && galeria.classList.contains('galeria')) {
+    fotos.forEach(foto => galeria.appendChild(foto));
+}
 
 const botoesFiltroLocal = document.querySelectorAll('.filtro-btn:not(.filtro-estilo):not(.filtro-album)');
 const botoesFiltroEstilo = document.querySelectorAll('.filtro-btn.filtro-estilo');
@@ -101,12 +103,14 @@ function atualizarGaleria() {
     });
 }
 
-toggleFavoritas.addEventListener('click', () => {
-    filtroFavoritaAtivo = !filtroFavoritaAtivo;
-    toggleFavoritas.classList.toggle('ativo', filtroFavoritaAtivo);
-    toggleFavoritas.setAttribute('aria-pressed', String(filtroFavoritaAtivo));
-    atualizarGaleria();
-});
+if (toggleFavoritas) {
+    toggleFavoritas.addEventListener('click', () => {
+        filtroFavoritaAtivo = !filtroFavoritaAtivo;
+        toggleFavoritas.classList.toggle('ativo', filtroFavoritaAtivo);
+        toggleFavoritas.setAttribute('aria-pressed', String(filtroFavoritaAtivo));
+        atualizarGaleria();
+    });
+}
 
 function configurarGrupoFiltro(botoes, aoClicar) {
     botoes.forEach(botao => {
@@ -128,7 +132,7 @@ pinsMapa.forEach(pin => {
     const filtro = pin.dataset.filtro;
     const preview = pin.querySelector('.mapa-pin-preview');
     const previewImg = pin.querySelector('.mapa-pin-preview-img');
-    const fotoDaCategoria = document.querySelector(`.galeria img[data-categoria="${filtro}"]`);
+    const fotoDaCategoria = document.querySelector(`#dados-fotos img[data-categoria="${filtro}"], .galeria img[data-categoria="${filtro}"]`);
     const botaoFiltro = document.querySelector(`.filtro-btn[data-filtro="${filtro}"]`);
 
     if (fotoDaCategoria) {
@@ -141,13 +145,15 @@ pinsMapa.forEach(pin => {
     pin.addEventListener('click', () => {
         if (botaoFiltro) {
             botaoFiltro.click();
-            galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
+            if (galeriaCompleta) galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
         }
     });
 });
 
 const mapaScroll = document.querySelector('.mapa');
-mapaScroll.scrollLeft = (mapaScroll.scrollWidth - mapaScroll.clientWidth) / 2;
+if (mapaScroll) {
+    mapaScroll.scrollLeft = (mapaScroll.scrollWidth - mapaScroll.clientWidth) / 2;
+}
 
 const lightbox = document.getElementById('lightbox');
 const lightboxConteudo = document.querySelector('.lightbox-conteudo');
@@ -350,6 +356,7 @@ function criarPolaroid(img, lista, mostrarEstrela = true) {
     polaroid.className = 'polaroid';
     polaroid.style.setProperty('--rot', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
     polaroid.style.setProperty('--desloc', `${Math.round(Math.random() * 12 - 4)}px`);
+    polaroid.style.setProperty('--sobreposicao', `${Math.round(-95 + Math.random() * 35)}px`);
 
     const imgClone = document.createElement('img');
     imgClone.src = cloudinaryUrl(img.dataset.publicId, 400);
@@ -372,38 +379,101 @@ const secaoFavoritas = document.getElementById('secao-favoritas');
 const carrosselFavoritas = document.getElementById('carrossel-favoritas');
 const carrosselRecentes = document.getElementById('carrossel-recentes');
 
-const favoritas = embaralhar(imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true'));
-if (favoritas.length === 0) {
-    secaoFavoritas.hidden = true;
-} else {
-    favoritas.forEach(img => carrosselFavoritas.appendChild(criarPolaroid(img, favoritas, false)));
+if (secaoFavoritas && carrosselFavoritas) {
+    const favoritas = embaralhar(imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true'));
+    if (favoritas.length === 0) {
+        secaoFavoritas.hidden = true;
+    } else {
+        favoritas.forEach(img => carrosselFavoritas.appendChild(criarPolaroid(img, favoritas, false)));
+    }
 }
 
-const recentes = imagensOrdemOriginal.slice(-8).reverse();
-recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes)));
+if (carrosselRecentes) {
+    const recentes = imagensOrdemOriginal.slice(-15).reverse();
+    recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes, false)));
+}
+
+function chaveAlbum(el) {
+    if (el.dataset.album) return el.dataset.album;
+    if (el.dataset.estilo) return el.dataset.estilo;
+    if (el.dataset.periodo) return el.dataset.periodo;
+    if (el.hasAttribute('data-favoritos')) return 'favoritos';
+    return null;
+}
+
+function fotosDoAlbum(el) {
+    if (el.dataset.album) {
+        const album = el.dataset.album;
+        return imagensOrdemOriginal.filter(img => (img.dataset.album || '').split(' ').includes(album));
+    }
+    if (el.dataset.estilo) {
+        const estilo = el.dataset.estilo;
+        return imagensOrdemOriginal.filter(img => (img.dataset.estilo || '').split(' ').includes(estilo));
+    }
+    if (el.dataset.periodo) {
+        const periodo = el.dataset.periodo;
+        return imagensOrdemOriginal.filter(img => img.dataset.periodo === periodo);
+    }
+    if (el.hasAttribute('data-favoritos')) {
+        return imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true');
+    }
+    return [];
+}
 
 document.querySelectorAll('.album-pilha').forEach(pilha => {
-    let fotosFonte;
-    if (pilha.dataset.album) {
-        const album = pilha.dataset.album;
-        fotosFonte = imagensOrdemOriginal.filter(img => (img.dataset.album || '').split(' ').includes(album));
-    } else if (pilha.dataset.estilo) {
-        const estilo = pilha.dataset.estilo;
-        fotosFonte = imagensOrdemOriginal.filter(img => (img.dataset.estilo || '').split(' ').includes(estilo));
-    } else if (pilha.dataset.periodo) {
-        const periodo = pilha.dataset.periodo;
-        fotosFonte = imagensOrdemOriginal.filter(img => img.dataset.periodo === periodo);
-    } else if (pilha.hasAttribute('data-favoritos')) {
-        fotosFonte = imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true');
+    const fotosFonte = fotosDoAlbum(pilha);
+
+    if (fotosFonte.length === 0) {
+        pilha.classList.add('sem-fotos');
     } else {
-        fotosFonte = [];
+        const fotos = embaralhar([...fotosFonte]).slice(0, 3);
+        const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
+        fotos.forEach((foto, i) => {
+            if (!cartoes[i]) return;
+            cartoes[i].style.backgroundImage = `url(${cloudinaryUrl(foto.dataset.publicId, 400)})`;
+        });
     }
 
-    const fotos = embaralhar([...fotosFonte]).slice(0, 3);
+    const chave = chaveAlbum(pilha);
+    if (!chave) return;
+    pilha.addEventListener('click', () => {
+        const alvo = document.getElementById(`album-${chave}`);
+        if (alvo) {
+            alvo.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = `albums.html#album-${chave}`;
+        }
+    });
+});
 
-    const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
-    fotos.forEach((foto, i) => {
-        if (!cartoes[i]) return;
-        cartoes[i].style.backgroundImage = `url(${cloudinaryUrl(foto.dataset.publicId, 400)})`;
+document.querySelectorAll('.album-secao').forEach(secao => {
+    const galeriaEl = secao.querySelector('.album-secao-galeria');
+    if (!galeriaEl) return;
+
+    const fotosFonte = fotosDoAlbum(secao);
+    if (fotosFonte.length === 0) {
+        return;
+    }
+
+    const clones = embaralhar([...fotosFonte]).map(img => {
+        const clone = document.createElement('img');
+        clone.src = cloudinaryUrl(img.dataset.publicId, 640);
+        clone.alt = img.alt;
+        clone.loading = 'lazy';
+        Object.assign(clone.dataset, img.dataset);
+        return clone;
+    });
+
+    clones.forEach(clone => {
+        const item = document.createElement('div');
+        item.className = 'galeria-item';
+        item.appendChild(clone);
+
+        const bandeira = criarBandeira(clone.dataset.categoria);
+        if (bandeira) item.appendChild(bandeira);
+        if (clone.dataset.favorita === 'true') item.appendChild(criarEstrela());
+
+        clone.addEventListener('click', () => abrirLightbox(clone, clones));
+        galeriaEl.appendChild(item);
     });
 });
