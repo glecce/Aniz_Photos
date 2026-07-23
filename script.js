@@ -143,6 +143,11 @@ pinsMapa.forEach(pin => {
     }
 
     pin.addEventListener('click', () => {
+        const secaoCidade = document.getElementById(`album-${filtro}`);
+        if (secaoCidade) {
+            secaoCidade.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
         if (botaoFiltro) {
             botaoFiltro.click();
             if (galeriaCompleta) galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
@@ -397,6 +402,7 @@ function chaveAlbum(el) {
     if (el.dataset.album) return el.dataset.album;
     if (el.dataset.estilo) return el.dataset.estilo;
     if (el.dataset.periodo) return el.dataset.periodo;
+    if (el.dataset.filtro) return el.dataset.filtro;
     if (el.hasAttribute('data-favoritos')) return 'favoritos';
     return null;
 }
@@ -413,6 +419,10 @@ function fotosDoAlbum(el) {
     if (el.dataset.periodo) {
         const periodo = el.dataset.periodo;
         return imagensOrdemOriginal.filter(img => img.dataset.periodo === periodo);
+    }
+    if (el.dataset.filtro) {
+        const filtro = el.dataset.filtro;
+        return imagensOrdemOriginal.filter(img => img.dataset.categoria === filtro);
     }
     if (el.hasAttribute('data-favoritos')) {
         return imagensOrdemOriginal.filter(img => img.dataset.favorita === 'true');
