@@ -830,6 +830,10 @@ header {
     margin: 0 auto;
 }
 
+.pagina-mapa .mapa-wrapper {
+    max-width: 1800px;
+}
+
 @media (max-width: 800px) {
     .mapa {
         padding-inline: 16px;
