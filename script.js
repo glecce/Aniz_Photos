@@ -432,17 +432,20 @@ function fotosDoAlbum(el) {
 
 document.querySelectorAll('.album-pilha').forEach(pilha => {
     const fotosFonte = fotosDoAlbum(pilha);
+    const elementoParaEsconder = pilha.closest('.album-secao') || pilha;
 
     if (fotosFonte.length === 0) {
-        pilha.classList.add('sem-fotos');
-    } else {
-        const fotos = embaralhar([...fotosFonte]).slice(0, 3);
-        const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
-        fotos.forEach((foto, i) => {
-            if (!cartoes[i]) return;
-            cartoes[i].style.backgroundImage = `url(${cloudinaryUrl(foto.dataset.publicId, 400)})`;
-        });
+        elementoParaEsconder.style.display = 'none';
+        return;
     }
+
+    elementoParaEsconder.style.display = '';
+    const fotos = embaralhar([...fotosFonte]).slice(0, 3);
+    const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
+    fotos.forEach((foto, i) => {
+        if (!cartoes[i]) return;
+        cartoes[i].style.backgroundImage = `url(${cloudinaryUrl(foto.dataset.publicId, 400)})`;
+    });
 
     const chave = chaveAlbum(pilha);
     if (!chave) return;
@@ -486,4 +489,21 @@ document.querySelectorAll('.album-secao').forEach(secao => {
         clone.addEventListener('click', () => abrirLightbox(clone, clones));
         galeriaEl.appendChild(item);
     });
+});
+
+document.querySelectorAll('.album-grupo').forEach(grupo => {
+    const temAlbumVisivel = Array.from(grupo.children).some(secao => secao.style.display !== 'none');
+    if (temAlbumVisivel) return;
+
+    grupo.style.display = 'none';
+
+    const legenda = grupo.previousElementSibling;
+    if (legenda && legenda.classList.contains('filtros-legenda')) {
+        legenda.style.display = 'none';
+    }
+
+    const divisor = grupo.nextElementSibling;
+    if (divisor && divisor.classList.contains('album-divisor')) {
+        divisor.style.display = 'none';
+    }
 });
