@@ -44,11 +44,16 @@ const BANDEIRAS = {
     barcelona: '🇪🇸',
     madrid: '🇪🇸',
     porto: '🇵🇹',
+    roma: '🇮🇹',
     sangiovanni: '🇮🇹',
     manfredonia: '🇮🇹',
     paris: '🇫🇷',
     amsterdam: '🇳🇱',
     berlim: '🇩🇪',
+    hamburgo: '🇩🇪',
+    lisboa: '🇵🇹',
+    sintra: '🇵🇹',
+    coimbra: '🇵🇹',
 };
 
 function criarEstrela() {

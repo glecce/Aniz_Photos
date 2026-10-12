@@ -363,6 +363,7 @@ header {
     color: #fff;
 }
 
+.filtro-btn.ativo[data-filtro="roma"],
 .filtro-btn.ativo[data-filtro="sangiovanni"],
 .filtro-btn.ativo[data-filtro="manfredonia"] {
     background-color: var(--color-italia);
@@ -374,7 +375,10 @@ header {
     color: #fff;
 }
 
-.filtro-btn.ativo[data-filtro="porto"] {
+.filtro-btn.ativo[data-filtro="porto"],
+.filtro-btn.ativo[data-filtro="lisboa"],
+.filtro-btn.ativo[data-filtro="sintra"],
+.filtro-btn.ativo[data-filtro="coimbra"] {
     background-color: var(--color-portugal);
     color: #fff;
 }
@@ -389,7 +393,8 @@ header {
     color: #fff;
 }
 
-.filtro-btn.ativo[data-filtro="berlim"] {
+.filtro-btn.ativo[data-filtro="berlim"],
+.filtro-btn.ativo[data-filtro="hamburgo"] {
     background-color: var(--color-alemanha);
     color: #fff;
 }
@@ -941,11 +946,16 @@ header {
 .mapa-pin[data-filtro="barcelona"] { --rot: 5deg; --cor: var(--color-espanha); }
 .mapa-pin[data-filtro="madrid"] { --rot: -2deg; --cor: var(--color-espanha); }
 .mapa-pin[data-filtro="porto"] { --rot: 3deg; --cor: var(--color-portugal); }
+.mapa-pin[data-filtro="roma"] { --rot: 2deg; --cor: var(--color-italia); }
 .mapa-pin[data-filtro="sangiovanni"] { --rot: -4deg; --cor: var(--color-italia); }
 .mapa-pin[data-filtro="manfredonia"] { --rot: 6deg; --cor: var(--color-italia); }
 .mapa-pin[data-filtro="paris"] { --rot: -5deg; --cor: var(--color-franca); }
 .mapa-pin[data-filtro="amsterdam"] { --rot: 4deg; --cor: var(--color-holanda); }
 .mapa-pin[data-filtro="berlim"] { --rot: -3deg; --cor: var(--color-alemanha); }
+.mapa-pin[data-filtro="lisboa"] { --rot: -4deg; --cor: var(--color-portugal); }
+.mapa-pin[data-filtro="sintra"] { --rot: 5deg; --cor: var(--color-portugal); }
+.mapa-pin[data-filtro="coimbra"] { --rot: -6deg; --cor: var(--color-portugal); }
+.mapa-pin[data-filtro="hamburgo"] { --rot: 4deg; --cor: var(--color-alemanha); }
 
 .mapa-pin-preview {
     position: absolute;
