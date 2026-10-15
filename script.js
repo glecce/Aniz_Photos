@@ -74,10 +74,20 @@ function criarBandeira(categoria) {
     return bandeira;
 }
 
+function criarEtiqueta(texto) {
+    if (!texto) return null;
+    const etiqueta = document.createElement('span');
+    etiqueta.className = 'etiqueta-foto';
+    etiqueta.textContent = texto;
+    return etiqueta;
+}
+
 imagens.forEach(img => {
     const wrapper = img.parentElement;
     const bandeira = criarBandeira(img.dataset.categoria);
     if (bandeira) wrapper.appendChild(bandeira);
+    const etiqueta = criarEtiqueta(img.dataset.legenda);
+    if (etiqueta) wrapper.appendChild(etiqueta);
     if (img.dataset.favorita === 'true') {
         wrapper.appendChild(criarEstrela());
     }
@@ -377,6 +387,9 @@ function criarPolaroid(img, lista, mostrarEstrela = true) {
     const bandeira = criarBandeira(img.dataset.categoria);
     if (bandeira) polaroid.appendChild(bandeira);
 
+    const etiqueta = criarEtiqueta(img.dataset.legenda);
+    if (etiqueta) polaroid.appendChild(etiqueta);
+
     if (mostrarEstrela && img.dataset.favorita === 'true') {
         polaroid.appendChild(criarEstrela());
     }
@@ -489,6 +502,8 @@ document.querySelectorAll('.album-secao').forEach(secao => {
 
         const bandeira = criarBandeira(clone.dataset.categoria);
         if (bandeira) item.appendChild(bandeira);
+        const etiqueta = criarEtiqueta(clone.dataset.legenda);
+        if (etiqueta) item.appendChild(etiqueta);
         if (clone.dataset.favorita === 'true') item.appendChild(criarEstrela());
 
         clone.addEventListener('click', () => abrirLightbox(clone, clones));

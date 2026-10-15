@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@500&display=swap');
 
 :root {
     --color-principal: #a5b874;
@@ -670,6 +670,42 @@ header {
 .polaroid .bandeira-foto {
     top: 20px;
     left: 20px;
+}
+
+.etiqueta-foto {
+    position: relative;
+    z-index: 3;
+    display: block;
+    width: fit-content;
+    max-width: 90%;
+    margin: -14px auto 0;
+    padding: 3px 14px 4px;
+    background-color: #fffdf2;
+    color: #2b2b2b;
+    font-family: 'Caveat', 'Bradley Hand', cursive;
+    font-size: 1.2rem;
+    line-height: 1.15;
+    text-align: center;
+    transform: rotate(-2deg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.etiqueta-foto::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 46px;
+    height: 14px;
+    transform: translateX(-50%) rotate(3deg);
+    background-color: rgba(235, 225, 200, 0.75);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.polaroid .etiqueta-foto {
+    font-size: 1rem;
+    margin-top: -10px;
 }
 
 .albuns-carrossel {
