@@ -82,6 +82,17 @@ function criarEtiqueta(texto) {
     return etiqueta;
 }
 
+const CORES_ADESIVO = ['rosa', 'amarelo', 'azul', 'verde'];
+
+function criarAdesivoData(data) {
+    if (!data) return null;
+    const adesivo = document.createElement('span');
+    adesivo.className = `adesivo-data adesivo-${CORES_ADESIVO[Math.floor(Math.random() * CORES_ADESIVO.length)]}`;
+    adesivo.style.setProperty('--rot-adesivo', `${(Math.random() * 8 - 2).toFixed(1)}deg`);
+    adesivo.textContent = data;
+    return adesivo;
+}
+
 imagens.forEach(img => {
     const wrapper = img.parentElement;
     const bandeira = criarBandeira(img.dataset.categoria);
@@ -371,7 +382,7 @@ function finalizarToque(evento) {
 lightbox.addEventListener('touchend', finalizarToque, { passive: true });
 lightbox.addEventListener('touchcancel', () => { toqueEmAndamento = false; }, { passive: true });
 
-function criarPolaroid(img, lista, mostrarEstrela = true) {
+function criarPolaroid(img, lista, mostrarEstrela = true, comData = false) {
     const polaroid = document.createElement('figure');
     polaroid.className = 'polaroid';
     polaroid.style.setProperty('--rot', `${(Math.random() * 12 - 6).toFixed(2)}deg`);
@@ -387,8 +398,13 @@ function criarPolaroid(img, lista, mostrarEstrela = true) {
     const bandeira = criarBandeira(img.dataset.categoria);
     if (bandeira) polaroid.appendChild(bandeira);
 
+    const etiquetas = document.createElement('div');
+    etiquetas.className = 'polaroid-etiquetas';
     const etiqueta = criarEtiqueta(img.dataset.legenda);
-    if (etiqueta) polaroid.appendChild(etiqueta);
+    if (etiqueta) etiquetas.appendChild(etiqueta);
+    const adesivo = comData ? criarAdesivoData(img.dataset.data) : null;
+    if (adesivo) etiquetas.appendChild(adesivo);
+    if (etiquetas.childElementCount) polaroid.appendChild(etiquetas);
 
     if (mostrarEstrela && img.dataset.favorita === 'true') {
         polaroid.appendChild(criarEstrela());
@@ -413,7 +429,9 @@ if (secaoFavoritas && carrosselFavoritas) {
 
 if (carrosselRecentes) {
     const recentes = imagensOrdemOriginal.slice(-15).reverse();
-    recentes.forEach(img => carrosselRecentes.appendChild(criarPolaroid(img, recentes, false)));
+    recentes.forEach(img => carrosselRecentes.appendChild(
+        criarPolaroid(img, recentes, false, true)
+    ));
 }
 
 function chaveAlbum(el) {
@@ -448,17 +466,43 @@ function fotosDoAlbum(el) {
     return [];
 }
 
-document.querySelectorAll('.album-pilha').forEach(pilha => {
-    const fotosFonte = fotosDoAlbum(pilha);
-    const elementoParaEsconder = pilha.closest('.album-secao') || pilha;
+// rodadas (capa de cima de todos antes da 2ª/3ª) e álbuns menores primeiro, para garantir capa única a cada um
+function escolherCapasSemRepetir(pilhas) {
+    const usadas = new Set();
+    const candidatos = pilhas
+        .map(pilha => ({ pilha, fotos: embaralhar([...fotosDoAlbum(pilha)]), capas: [] }))
+        .filter(album => album.fotos.length > 0)
+        .sort((a, b) => a.fotos.length - b.fotos.length);
 
-    if (fotosFonte.length === 0) {
+    for (let rodada = 0; rodada < 3; rodada++) {
+        candidatos.forEach(album => {
+            const livre = album.fotos.find(foto => !usadas.has(foto));
+            if (!livre) return;
+            usadas.add(livre);
+            album.capas.push(livre);
+        });
+    }
+
+    candidatos.forEach(album => {
+        if (album.capas.length === 0) album.capas.push(album.fotos[0]);
+    });
+
+    return new Map(candidatos.map(album => [album.pilha, album.capas]));
+}
+
+const pilhasAlbum = Array.from(document.querySelectorAll('.album-pilha'));
+const capasPorPilha = escolherCapasSemRepetir(pilhasAlbum);
+
+pilhasAlbum.forEach(pilha => {
+    const elementoParaEsconder = pilha.closest('.album-secao') || pilha;
+    const fotos = capasPorPilha.get(pilha);
+
+    if (!fotos) {
         elementoParaEsconder.style.display = 'none';
         return;
     }
 
     elementoParaEsconder.style.display = '';
-    const fotos = embaralhar([...fotosFonte]).slice(0, 3);
     const cartoes = Array.from(pilha.querySelectorAll('.album-cartao-cor')).reverse();
     fotos.forEach((foto, i) => {
         if (!cartoes[i]) return;
