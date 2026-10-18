@@ -13,6 +13,7 @@
 
     --color-espanha: #d2691e;
     --color-egito: #c9a227;
+    --color-marrocos: #2e8b74;
     --color-malta: #472ea4;
     --color-italia: #3f7d4a;
     --color-grecia: #8c8c8c;
@@ -355,6 +356,11 @@ header {
 
 .filtro-btn.ativo[data-filtro="cairo"] {
     background-color: var(--color-egito);
+    color: #fff;
+}
+
+.filtro-btn.ativo[data-filtro="marrakech"] {
+    background-color: var(--color-marrocos);
     color: #fff;
 }
 
@@ -927,7 +933,7 @@ header {
     position: relative;
     width: 100%;
     max-width: 1300px;
-    aspect-ratio: 170 / 102;
+    aspect-ratio: 784.077 / 458.627;
     margin: 0 auto;
 }
 
@@ -957,7 +963,7 @@ header {
 .mapa-wrapper svg path {
     fill: var(--color-secundaria);
     stroke: var(--color-bg);
-    stroke-width: 0.2;
+    stroke-width: 0.6;
     transition: fill 0.2s ease;
 }
 
@@ -968,6 +974,10 @@ header {
 
 .mapa-wrapper svg path#eg {
     fill: var(--color-egito);
+}
+
+.mapa-wrapper svg path#ma {
+    fill: var(--color-marrocos);
 }
 
 .mapa-wrapper svg path#mt {
@@ -1038,6 +1048,7 @@ header {
 
 .mapa-pin[data-filtro="malta"] { --rot: -6deg; --cor: var(--color-malta); }
 .mapa-pin[data-filtro="cairo"] { --rot: 4deg; --cor: var(--color-egito); }
+.mapa-pin[data-filtro="marrakech"] { --rot: -5deg; --cor: var(--color-marrocos); }
 .mapa-pin[data-filtro="atenas"] { --rot: -3deg; --cor: var(--color-grecia); }
 .mapa-pin[data-filtro="barcelona"] { --rot: 5deg; --cor: var(--color-espanha); }
 .mapa-pin[data-filtro="madrid"] { --rot: -2deg; --cor: var(--color-espanha); }
@@ -1052,6 +1063,171 @@ header {
 .mapa-pin[data-filtro="sintra"] { --rot: 5deg; --cor: var(--color-portugal); }
 .mapa-pin[data-filtro="coimbra"] { --rot: -6deg; --cor: var(--color-portugal); }
 .mapa-pin[data-filtro="hamburgo"] { --rot: 4deg; --cor: var(--color-alemanha); }
+
+.mapa-hub {
+    --r: 54px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 3;
+}
+
+.mapa-hub[data-pais="pt"] { --cor: var(--color-portugal); }
+.mapa-hub[data-pais="es"] { --cor: var(--color-espanha); }
+.mapa-hub[data-pais="it"] { --cor: var(--color-italia); }
+.mapa-hub[data-pais="de"] { --cor: var(--color-alemanha); }
+
+.mapa-hub.aberto {
+    z-index: 20;
+}
+
+.mapa-hub::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * (var(--r) + 34px));
+    top: calc(-1 * (var(--r) + 34px));
+    width: calc(2 * (var(--r) + 34px));
+    height: calc(2 * (var(--r) + 34px));
+    border-radius: 50%;
+    background-color: rgba(255, 253, 247, 0.9);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    transform: scale(0);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+}
+
+.mapa-hub.aberto::before {
+    transform: scale(1);
+}
+
+.mapa-hub-botao {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.mapa-hub-ponto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--cor);
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 0 0 2px var(--cor);
+    color: #fff;
+    font-family: var(--font-principal);
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.mapa-hub.ativo .mapa-hub-ponto {
+    box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 6px var(--cor);
+}
+
+.mapa-hub-botao:hover .mapa-hub-ponto,
+.mapa-hub-botao:focus-visible .mapa-hub-ponto {
+    transform: scale(1.2);
+}
+
+.mapa-hub-nome {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 8px;
+    border-radius: 10px;
+    background-color: #fffdf7;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    font-family: var(--font-principal);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.mapa-hub:not(.aberto) .mapa-hub-botao:hover .mapa-hub-nome,
+.mapa-hub:not(.aberto) .mapa-hub-botao:focus-visible .mapa-hub-nome {
+    opacity: 1;
+}
+
+.mapa-hub-raio {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--r);
+    height: 1.5px;
+    background-color: var(--cor);
+    opacity: 0.5;
+    transform-origin: 0 50%;
+    transform: rotate(var(--ang)) scaleX(0);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+}
+
+.mapa-hub.aberto .mapa-hub-raio {
+    transform: rotate(var(--ang)) scaleX(1);
+}
+
+.mapa-hub .mapa-pin {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.3);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.mapa-hub.aberto .mapa-pin {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)));
+}
+
+.mapa-pin-nome {
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1px 6px;
+    border-radius: 8px;
+    background-color: #fffdf7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-family: var(--font-principal);
+    font-size: 0.62rem;
+    color: var(--color-text-primaria);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.mapa-pin-nome-acima {
+    top: auto;
+    bottom: calc(100% + 3px);
+}
+
+.mapa-pin-nome-dir,
+.mapa-pin-nome-esq {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mapa-pin-nome-dir {
+    left: calc(100% + 4px);
+}
+
+.mapa-pin-nome-esq {
+    left: auto;
+    right: calc(100% + 4px);
+}
 
 .mapa-pin-preview {
     position: absolute;

@@ -39,6 +39,7 @@ imagens.forEach(img => {
 
 const BANDEIRAS = {
     cairo: '🇪🇬',
+    marrakech: '🇲🇦',
     malta: '🇲🇹',
     atenas: '🇬🇷',
     barcelona: '🇪🇸',
@@ -127,6 +128,9 @@ function atualizarGaleria() {
     pinsMapa.forEach(pin => {
         pin.classList.toggle('ativo', pin.dataset.filtro === filtroLocalAtivo);
     });
+    document.querySelectorAll('.mapa-hub').forEach(hub => {
+        hub.classList.toggle('ativo', !!hub.querySelector('.mapa-pin.ativo'));
+    });
 }
 
 if (toggleFavoritas) {
@@ -179,6 +183,58 @@ pinsMapa.forEach(pin => {
             if (galeriaCompleta) galeriaCompleta.scrollIntoView({ behavior: 'smooth' });
         }
     });
+});
+
+const hubsMapa = document.querySelectorAll('.mapa-hub');
+
+function fecharHubs(exceto) {
+    hubsMapa.forEach(hub => {
+        if (hub === exceto) return;
+        hub.classList.remove('aberto');
+        hub.querySelector('.mapa-hub-botao').setAttribute('aria-expanded', 'false');
+    });
+}
+
+hubsMapa.forEach(hub => {
+    const botao = hub.querySelector('.mapa-hub-botao');
+    const cidades = Array.from(hub.querySelectorAll('.mapa-pin'));
+    const raio = parseFloat(getComputedStyle(hub).getPropertyValue('--r')) || 54;
+    // ângulo da 1ª cidade (0° = direita); a ordem no HTML segue a geografia a partir dele
+    const inicio = { 2: 0, 3: 180 }[cidades.length] ?? -90;
+
+    cidades.forEach((cidade, i) => {
+        const angulo = inicio + (360 / cidades.length) * i;
+        const rad = angulo * Math.PI / 180;
+        cidade.style.setProperty('--dx', `${(Math.cos(rad) * raio).toFixed(1)}px`);
+        cidade.style.setProperty('--dy', `${(Math.sin(rad) * raio).toFixed(1)}px`);
+
+        const linha = document.createElement('span');
+        linha.className = 'mapa-hub-raio';
+        linha.style.setProperty('--ang', `${angulo}deg`);
+        hub.insertBefore(linha, botao);
+
+        const dx = Math.cos(rad), dy = Math.sin(rad);
+        const lado = Math.abs(dx) > 0.5 ? (dx > 0 ? 'dir' : 'esq') : (dy < 0 ? 'acima' : 'abaixo');
+        const nome = document.createElement('span');
+        nome.className = `mapa-pin-nome mapa-pin-nome-${lado}`;
+        nome.textContent = cidade.querySelector('.mapa-pin-preview-label')?.textContent || '';
+        cidade.appendChild(nome);
+    });
+
+    botao.addEventListener('click', () => {
+        const abrir = !hub.classList.contains('aberto');
+        fecharHubs(hub);
+        hub.classList.toggle('aberto', abrir);
+        botao.setAttribute('aria-expanded', String(abrir));
+    });
+});
+
+document.addEventListener('click', evento => {
+    if (!evento.target.closest('.mapa-hub')) fecharHubs();
+});
+
+document.addEventListener('keydown', evento => {
+    if (evento.key === 'Escape') fecharHubs();
 });
 
 const mapaScroll = document.querySelector('.mapa');
