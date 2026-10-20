@@ -39,6 +39,7 @@ imagens.forEach(img => {
 
 const BANDEIRAS = {
     cairo: '🇪🇬',
+    luxor: '🇪🇬',
     marrakech: '🇲🇦',
     malta: '🇲🇹',
     atenas: '🇬🇷',
@@ -185,57 +186,201 @@ pinsMapa.forEach(pin => {
     });
 });
 
-const hubsMapa = document.querySelectorAll('.mapa-hub');
+const svgMapa = document.getElementById('mapa-svg');
+const wrapperMapa = document.getElementById('mapa-wrapper');
 
-function fecharHubs(exceto) {
-    hubsMapa.forEach(hub => {
-        if (hub === exceto) return;
-        hub.classList.remove('aberto');
-        hub.querySelector('.mapa-hub-botao').setAttribute('aria-expanded', 'false');
+if (svgMapa && wrapperMapa) {
+    const hubs = Array.from(wrapperMapa.querySelectorAll('.mapa-hub'));
+    const cidadesDoHub = hub => Array.from(hub.querySelectorAll('.mapa-pin'));
+    const todasCidades = Array.from(wrapperMapa.querySelectorAll('.mapa-pin'));
+    const coord = el => [parseFloat(el.dataset.x), parseFloat(el.dataset.y)];
+    const paisDoPin = pin => pin.dataset.pais || pin.closest('.mapa-hub')?.dataset.pais;
+
+    function formasDoPais(id) {
+        const el = id && svgMapa.getElementById(id);
+        if (!el) return null;
+        const partes = el.tagName.toLowerCase() === 'g' ? Array.from(el.querySelectorAll('path')) : [el];
+        const principal = el.tagName.toLowerCase() === 'g' ? (el.querySelector('path.mainland') || partes[0]) : el;
+        return { partes, principal };
+    }
+
+    // o contorno do mapa é simplificado: cidades no litoral podem cair no mar, então puxa para dentro do país
+    function puxarParaDentro(pin) {
+        const formas = formasDoPais(paisDoPin(pin));
+        if (!formas) return;
+        const dentro = (x, y) => formas.partes.some(parte => parte.isPointInFill(new DOMPoint(x, y)));
+        const folga = 0.35;
+        const comFolga = (x, y) => dentro(x, y) && dentro(x + folga, y) && dentro(x - folga, y) && dentro(x, y + folga) && dentro(x, y - folga);
+        const bb = formas.principal.getBBox();
+        const cx = bb.x + bb.width / 2, cy = bb.y + bb.height / 2;
+        let [x, y] = coord(pin);
+        for (let i = 0; i < 40 && !comFolga(x, y); i++) {
+            x += (cx - x) * 0.05;
+            y += (cy - y) * 0.05;
+        }
+        pin.dataset.x = x.toFixed(2);
+        pin.dataset.y = y.toFixed(2);
+    }
+
+    todasCidades.forEach(puxarParaDentro);
+
+    hubs.forEach(hub => {
+        const pontos = cidadesDoHub(hub).map(coord);
+        const botao = hub.querySelector('.mapa-hub-botao');
+        botao.dataset.x = pontos.reduce((s, p) => s + p[0], 0) / pontos.length;
+        botao.dataset.y = pontos.reduce((s, p) => s + p[1], 0) / pontos.length;
+
+        cidadesDoHub(hub).forEach(cidade => {
+            const nome = document.createElement('span');
+            nome.className = 'mapa-pin-nome';
+            nome.textContent = cidade.querySelector('.mapa-pin-preview-label')?.textContent || '';
+            cidade.appendChild(nome);
+        });
     });
+
+    const posicionaveis = [...todasCidades, ...hubs.map(hub => hub.querySelector('.mapa-hub-botao'))];
+    const proporcao = () => (wrapperMapa.clientWidth / wrapperMapa.clientHeight) || 1.6;
+
+    function enquadrar(pontos, folga, larguraMinima) {
+        const xs = pontos.map(p => p[0]);
+        const ys = pontos.map(p => p[1]);
+        const minX = Math.min(...xs), maxX = Math.max(...xs);
+        const minY = Math.min(...ys), maxY = Math.max(...ys);
+        let w = Math.max((maxX - minX) * (1 + 2 * folga), larguraMinima);
+        let h = (maxY - minY) * (1 + 2 * folga);
+        const r = proporcao();
+        if (w / h < r) w = h * r; else h = w / r;
+        return { x: (minX + maxX) / 2 - w / 2, y: (minY + maxY) / 2 - h / 2, w, h };
+    }
+
+    let vbAtual;
+    function aplicarViewBox(vb) {
+        vbAtual = vb;
+        svgMapa.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+        posicionaveis.forEach(el => {
+            const [x, y] = coord(el);
+            el.style.left = `${((x - vb.x) / vb.w) * 100}%`;
+            el.style.top = `${((y - vb.y) / vb.h) * 100}%`;
+        });
+    }
+
+    let quadroAnimacao;
+    function animarPara(vb) {
+        cancelAnimationFrame(quadroAnimacao);
+        const de = { ...vbAtual };
+        const inicio = performance.now();
+        const passo = agora => {
+            const t = Math.min((agora - inicio) / 650, 1);
+            const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            aplicarViewBox({
+                x: de.x + (vb.x - de.x) * e,
+                y: de.y + (vb.y - de.y) * e,
+                w: de.w + (vb.w - de.w) * e,
+                h: de.h + (vb.h - de.h) * e,
+            });
+            if (t < 1) quadroAnimacao = requestAnimationFrame(passo);
+        };
+        quadroAnimacao = requestAnimationFrame(passo);
+    }
+
+    // nome de cada cidade vai para o lado oposto à cidade vizinha mais próxima, para não se sobreporem
+    function posicionarNomes(hub, vb) {
+        const escala = wrapperMapa.clientWidth / vb.w;
+        const cidades = cidadesDoHub(hub);
+        cidades.forEach(cidade => {
+            const [x, y] = coord(cidade);
+            let maisPerto = null;
+            cidades.forEach(outra => {
+                if (outra === cidade) return;
+                const [ox, oy] = coord(outra);
+                const d = Math.hypot(ox - x, oy - y) * escala;
+                if (!maisPerto || d < maisPerto.d) maisPerto = { d, dx: (ox - x) * escala, dy: (oy - y) * escala };
+            });
+            let lado = 'abaixo';
+            if (maisPerto && maisPerto.d < 90) {
+                if (Math.abs(maisPerto.dx) >= Math.abs(maisPerto.dy)) lado = maisPerto.dx > 0 ? 'esq' : 'dir';
+                else lado = maisPerto.dy > 0 ? 'acima' : 'abaixo';
+            }
+            cidade.querySelector('.mapa-pin-nome').className = `mapa-pin-nome mapa-pin-nome-${lado}`;
+        });
+    }
+
+    const vistaGeral = () => enquadrar(todasCidades.map(coord), 0.12, 0);
+
+    const botaoVoltar = document.createElement('button');
+    botaoVoltar.type = 'button';
+    botaoVoltar.className = 'mapa-voltar';
+    botaoVoltar.textContent = '← Back';
+    botaoVoltar.hidden = true;
+    wrapperMapa.appendChild(botaoVoltar);
+
+    let hubFocado = null;
+
+    function focar(hub) {
+        hubFocado = hub;
+        hubs.forEach(h => {
+            h.classList.toggle('aberto', h === hub);
+            h.querySelector('.mapa-hub-botao').setAttribute('aria-expanded', String(h === hub));
+        });
+        wrapperMapa.classList.add('em-foco');
+        botaoVoltar.hidden = false;
+        const pontos = cidadesDoHub(hub).map(coord);
+        const forma = formasDoPais(hub.dataset.pais)?.principal.getBBox();
+        if (forma) pontos.push([forma.x, forma.y], [forma.x + forma.width, forma.y + forma.height]);
+        const alvo = enquadrar(pontos, 0.12, 0);
+        afastarCidades(hub, alvo);
+        posicionarNomes(hub, alvo);
+        animarPara(alvo);
+    }
+
+    // cidades muito próximas no zoom ganham um deslocamento visual para cada uma continuar clicável
+    function afastarCidades(hub, vb) {
+        const distanciaMinima = 26;
+        const escala = wrapperMapa.clientWidth / vb.w;
+        const cidades = cidadesDoHub(hub);
+        const px = cidades.map(c => coord(c).map(v => v * escala));
+        const desloc = cidades.map(() => [0, 0]);
+        for (let rodada = 0; rodada < 12; rodada++) {
+            for (let i = 0; i < cidades.length; i++) {
+                for (let j = i + 1; j < cidades.length; j++) {
+                    const ax = px[i][0] + desloc[i][0], ay = px[i][1] + desloc[i][1];
+                    const bx = px[j][0] + desloc[j][0], by = px[j][1] + desloc[j][1];
+                    let dx = bx - ax, dy = by - ay;
+                    const d = Math.hypot(dx, dy) || 0.01;
+                    if (d >= distanciaMinima) continue;
+                    const empurrao = (distanciaMinima - d) / 2;
+                    dx /= d; dy /= d;
+                    desloc[i][0] -= dx * empurrao; desloc[i][1] -= dy * empurrao;
+                    desloc[j][0] += dx * empurrao; desloc[j][1] += dy * empurrao;
+                }
+            }
+        }
+        cidades.forEach((c, i) => {
+            c.style.setProperty('--ax', `${desloc[i][0].toFixed(1)}px`);
+            c.style.setProperty('--ay', `${desloc[i][1].toFixed(1)}px`);
+        });
+    }
+
+    function voltarParaGeral() {
+        if (!hubFocado) return;
+        hubFocado = null;
+        hubs.forEach(h => {
+            h.classList.remove('aberto');
+            h.querySelector('.mapa-hub-botao').setAttribute('aria-expanded', 'false');
+        });
+        wrapperMapa.classList.remove('em-foco');
+        botaoVoltar.hidden = true;
+        animarPara(vistaGeral());
+    }
+
+    hubs.forEach(hub => hub.querySelector('.mapa-hub-botao').addEventListener('click', () => focar(hub)));
+    botaoVoltar.addEventListener('click', voltarParaGeral);
+    document.addEventListener('keydown', evento => {
+        if (evento.key === 'Escape' && !lightbox?.classList.contains('ativo')) voltarParaGeral();
+    });
+
+    aplicarViewBox(vistaGeral());
 }
-
-hubsMapa.forEach(hub => {
-    const botao = hub.querySelector('.mapa-hub-botao');
-    const cidades = Array.from(hub.querySelectorAll('.mapa-pin'));
-    const raio = parseFloat(getComputedStyle(hub).getPropertyValue('--r')) || 54;
-    // ângulo da 1ª cidade (0° = direita); a ordem no HTML segue a geografia a partir dele
-    const inicio = { 2: 0, 3: 180 }[cidades.length] ?? -90;
-
-    cidades.forEach((cidade, i) => {
-        const angulo = inicio + (360 / cidades.length) * i;
-        const rad = angulo * Math.PI / 180;
-        cidade.style.setProperty('--dx', `${(Math.cos(rad) * raio).toFixed(1)}px`);
-        cidade.style.setProperty('--dy', `${(Math.sin(rad) * raio).toFixed(1)}px`);
-
-        const linha = document.createElement('span');
-        linha.className = 'mapa-hub-raio';
-        linha.style.setProperty('--ang', `${angulo}deg`);
-        hub.insertBefore(linha, botao);
-
-        const dx = Math.cos(rad), dy = Math.sin(rad);
-        const lado = Math.abs(dx) > 0.5 ? (dx > 0 ? 'dir' : 'esq') : (dy < 0 ? 'acima' : 'abaixo');
-        const nome = document.createElement('span');
-        nome.className = `mapa-pin-nome mapa-pin-nome-${lado}`;
-        nome.textContent = cidade.querySelector('.mapa-pin-preview-label')?.textContent || '';
-        cidade.appendChild(nome);
-    });
-
-    botao.addEventListener('click', () => {
-        const abrir = !hub.classList.contains('aberto');
-        fecharHubs(hub);
-        hub.classList.toggle('aberto', abrir);
-        botao.setAttribute('aria-expanded', String(abrir));
-    });
-});
-
-document.addEventListener('click', evento => {
-    if (!evento.target.closest('.mapa-hub')) fecharHubs();
-});
-
-document.addEventListener('keydown', evento => {
-    if (evento.key === 'Escape') fecharHubs();
-});
 
 const mapaScroll = document.querySelector('.mapa');
 if (mapaScroll) {
